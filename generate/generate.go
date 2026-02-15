@@ -365,10 +365,6 @@ type KiroAgent struct {
 	Tools       []string `json:"tools,omitempty"`
 }
 
-func convertToKiroAgent(agt *agents.Agent) *KiroAgent {
-	return convertToKiroAgentWithName(agt, agt.Name)
-}
-
 func convertToKiroAgentWithName(agt *agents.Agent, name string) *KiroAgent {
 	return &KiroAgent{
 		Name:        name,
@@ -412,10 +408,6 @@ func buildSteeringContent(skl *skills.Skill) string {
 		sb.WriteString(skl.Instructions + "\n")
 	}
 	return sb.String()
-}
-
-func buildKiroAgentsReadme(plugin *PluginSpec, agts []*agents.Agent, skls []*skills.Skill) string {
-	return buildKiroAgentsReadmeWithPrefix(plugin, agts, skls, "")
 }
 
 func buildKiroAgentsReadmeWithPrefix(plugin *PluginSpec, agts []*agents.Agent, skls []*skills.Skill, prefix string) string {

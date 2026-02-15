@@ -4,35 +4,134 @@
 
 `assistantkit` is codegen-only. There's no way to verify that a specs directory is correct before generating plugins. Errors surface at runtime when agents fail to orchestrate, not at build time.
 
-## Proposed Commands
+## Status
 
-### `assistantkit validate`
+### ✅ Implemented
+
+- **`assistantkit validate`** — Static validation of specs directory
+- **`generate` + `validate` integration** — Generate runs validate first, `--skip-validate` to bypass
+- **Single-source prefix for Kiro** — Prefix defined once in deployment config, applied everywhere
+
+### ⏳ Remaining
+
+- **`assistantkit test`** — Dry-run orchestration with mock agent outputs (deferred)
+- **Conditional execution rules** — `run_if` expressions validation (not yet implemented)
+
+---
+
+## `assistantkit validate` (IMPLEMENTED)
 
 Static validation of specs directory. Catches errors before `generate`.
 
 Checks:
-- **plugin.json** — required fields present, valid JSON
-- **DAG acyclicity** — team workflow `depends_on` references form a valid DAG (no cycles)
-- **Agent references resolve** — every `agent_id` in team steps exists in `agents/`
-- **Skill references resolve** — every skill referenced by an agent exists in `skills/`
-- **Conditional execution rules** — `run_if` expressions reference valid step IDs and output fields
-- **Deployment targets** — platform names are valid, output paths don't conflict
-- **Frontmatter schema** — agent `.md` files have valid YAML frontmatter with required fields
+- ✅ **plugin.json** — required fields present, valid JSON
+- ✅ **DAG acyclicity** — team workflow `depends_on` references form a valid DAG (no cycles)
+- ✅ **Agent references resolve** — every `agent` in team steps exists in `agents/`
+- ✅ **Skill references resolve** — every skill referenced by an agent exists in `skills/`
+- ✅ **Input references** — `from` fields reference valid `step.output` paths
+- ✅ **Deployment targets** — platform names are valid, output paths don't conflict
+- ✅ **Frontmatter schema** — agent `.md` files have valid YAML frontmatter with required fields
+- ⏳ **Conditional execution rules** — `run_if` expressions reference valid step IDs (not yet)
 
 Example:
 ```bash
 assistantkit validate --specs=specs
 
-✓ plugin.json valid
-✓ DAG acyclic (6 steps, 4 phases)
-✓ All agent references resolve (6/6)
-✓ All skill references resolve (4/4)
-✓ Conditional rules reference valid steps
-✓ Deployment targets valid (2 targets)
-✗ agents/grails6-migration.md: missing 'model' in frontmatter
+=== AssistantKit Validator ===
+Specs directory: /path/to/specs
+
+✓ plugin.json    my-team v1.0.0
+✓ agents         6 agents
+✓ skills         4 skills
+✓ commands       2 commands
+✓ skill-refs     8 references resolve
+✓ teams          1 teams, 6 steps, 4 phases
+✓ deployments    1 deployments, 2 targets
+
+✓ Validation passed (6 agents, 4 skills, 2 commands)
 ```
 
-### `assistantkit test`
+---
+
+## `generate` + `validate` Integration (IMPLEMENTED)
+
+`generate` runs `validate` first and refuses to generate if validation fails:
+
+```bash
+assistantkit generate --specs=specs
+
+=== AssistantKit Generator ===
+Specs directory: /path/to/specs
+Target: local
+Output directory: .
+
+Validating specs...
+✓ Validation passed (6 agents, 4 skills, 2 commands)
+
+Team: my-team
+Loaded: 2 commands, 4 skills, 6 agents
+
+Generated targets:
+  - local-kiro: plugins/kiro
+  - local-claude: .claude/agents
+
+Done!
+```
+
+Add `--skip-validate` flag to bypass:
+```bash
+assistantkit generate --specs=specs --skip-validate
+```
+
+---
+
+## Single-Source Prefix for Kiro (IMPLEMENTED)
+
+The prefix is now defined **once** in the deployment config and applied everywhere during Kiro generation.
+
+### Before (prefix in multiple places)
+
+- Agent frontmatter: `name: cext_pm` ❌
+- Team references: `agent: pm` — mismatch!
+- Deployment config: `prefix: "cext_"`
+
+### After (prefix in ONE place)
+
+- Agent frontmatter: `name: pm` ✅ (canonical short name)
+- Team references: `agent: pm` ✅ (matches!)
+- Deployment config: `kiroCli.prefix: "cext_"` ✅ (applied at generation)
+
+### Deployment config format
+
+```json
+{
+  "targets": [
+    {
+      "name": "local-kiro",
+      "platform": "kiro-cli",
+      "output": "plugins/kiro",
+      "kiroCli": {
+        "prefix": "cext_",
+        "pluginDir": "plugins/kiro",
+        "format": "json"
+      }
+    }
+  ]
+}
+```
+
+### Generated output
+
+- Agent JSON filename: `cext_pm.json`
+- Agent name field: `"name": "cext_pm"`
+- Steering filename: `cext_use-case-analysis.md`
+- README examples: `kiro-cli chat --agent cext_pm`
+
+This enables multiple teams (cext_, prd_, rel_) to share a single Kiro agents directory without naming conflicts.
+
+---
+
+## `assistantkit test` (DEFERRED)
 
 Dry-run orchestration with mock agent outputs. Verifies the DAG executes correctly without calling any LLM.
 
@@ -56,19 +155,7 @@ Phase 4: coordinator ✓ (inputs: pm, security, performance, trms-migration)
 ✓ Disposition: (c) TRMS Migration
 ```
 
-### `assistantkit validate` + `generate` integration
-
-`generate` should run `validate` first and refuse to generate if validation fails:
-```bash
-assistantkit generate --specs=specs
-
-✗ Validation failed: agents/grails6-migration.md missing 'model' in frontmatter
-  Fix the above errors and re-run.
-```
-
-Add `--skip-validate` flag to bypass if needed.
-
-## Fixture File Format
+### Fixture File Format
 
 ```json
 {
@@ -100,15 +187,11 @@ Add `--skip-validate` flag to bypass if needed.
 }
 ```
 
-## Priority
-
-Medium — not blocking, but would have caught the `plugins/kiro/agents/agents/` nesting issue and would make iterating on team specs much faster.
-
 ---
 
-# Bug Fix: Kiro Agent Tool Mapping (FIXED)
+# Bug Fix: Kiro Agent Tool Mapping (FIXED ✅)
 
-`convertToKiroAgent()` was not mapping the `tools` field from agent specs to Kiro tool names. The `KiroAgent` struct had no `Tools` field at all.
+`convertToKiroAgent()` was not mapping the `tools` field from agent specs to Kiro tool names.
 
 **Fix applied**: Added `Tools []string` to `KiroAgent` and `mapKiroTools()` with mapping:
 
@@ -126,30 +209,28 @@ Unmapped names pass through as-is (e.g., MCP tool names like `Aha`).
 
 ---
 
-# Bug Fix: Steering File Prefix
+# Bug Fix: Steering File Prefix (FIXED ✅)
 
-`generateKiroAgents()` does not apply the `prefix` config from the deployment spec to steering filenames. Agent JSONs get the prefix (via the agent `name` field in frontmatter), but steering files use the raw skill name.
+**Problem**: `generateKiroAgents()` did not apply the `prefix` config from the deployment spec to steering filenames.
 
-**Expected**: `cext_use-case-analysis.md`
-**Actual**: `use-case-analysis.md`
-
-**Workaround**: Manual rename after generation.
-
-**Fix needed**: Read `prefix` from deployment config and prepend to steering filenames, matching the agent naming convention.
+**Fix applied**: The prefix from `kiroCli.prefix` is now applied to:
+- Agent JSON filenames
+- Agent name field inside JSON
+- Steering filenames
+- README usage examples
 
 ---
 
-# Enhancement: Kiro CLI Invocation Docs
+# Enhancement: Kiro CLI Invocation Docs (FIXED ✅)
 
-The generated `README.md` should include correct Kiro CLI invocation syntax. Currently it only shows `cp` install commands but no usage examples.
+The generated `README.md` now includes correct Kiro CLI invocation syntax with prefixed agent names:
 
-Should generate:
 ```bash
 # Single agent
-kiro-cli chat --agent <prefix>_<agent-name> "<prompt>"
+kiro-cli chat --agent cext_pm "<your prompt>"
 
 # Full team (coordinator-driven)
-kiro-cli chat --agent <prefix>_coordinator "<prompt>"
+kiro-cli chat --agent cext_coordinator "<your prompt>"
 ```
 
-The generator knows the agent names and prefix — it should emit the correct `kiro-cli chat --agent` commands in the README.
+The generator detects coordinator/orchestrator agents and shows team usage examples.
