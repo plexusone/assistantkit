@@ -46,6 +46,9 @@ nav:
   - CLI:
       - Generate: cli/generate-plugins.md
       - Validate: cli/validate.md
+  - Deployments:
+      - Overview: deployments/overview.md
+      - Kiro CLI: deployments/kiro-cli.md
   - Plugins:
       - Plugin Structure: plugins/structure.md
       - Commands: plugins/commands.md
