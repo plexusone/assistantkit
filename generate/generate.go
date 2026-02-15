@@ -342,10 +342,11 @@ func generateKiroAgents(dir string, plugin *PluginSpec, skls []*skills.Skill, ag
 
 // KiroAgent represents a Kiro CLI agent definition.
 type KiroAgent struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Prompt      string `json:"prompt"`
-	Model       string `json:"model,omitempty"`
+	Name        string   `json:"name"`
+	Description string   `json:"description"`
+	Prompt      string   `json:"prompt"`
+	Model       string   `json:"model,omitempty"`
+	Tools       []string `json:"tools,omitempty"`
 }
 
 func convertToKiroAgent(agt *agents.Agent) *KiroAgent {
@@ -354,7 +355,33 @@ func convertToKiroAgent(agt *agents.Agent) *KiroAgent {
 		Description: agt.Description,
 		Prompt:      agt.Instructions,
 		Model:       string(agt.Model),
+		Tools:       mapKiroTools(agt.Tools),
 	}
+}
+
+var kiroToolMap = map[string]string{
+	"Read":     "fs_read",
+	"Write":    "fs_write",
+	"Bash":     "execute_bash",
+	"Grep":     "grep",
+	"Glob":     "glob",
+	"WebFetch": "web_fetch",
+	"Code":     "code",
+}
+
+func mapKiroTools(tools []string) []string {
+	if len(tools) == 0 {
+		return nil
+	}
+	var mapped []string
+	for _, t := range tools {
+		if m, ok := kiroToolMap[t]; ok {
+			mapped = append(mapped, m)
+		} else {
+			mapped = append(mapped, t)
+		}
+	}
+	return mapped
 }
 
 func buildSteeringContent(skl *skills.Skill) string {
