@@ -2,8 +2,8 @@
 
 The `generate` command creates platform-specific plugins from a unified specs directory.
 
-!!! note "v0.9.0 Update"
-    As of v0.9.0, the main `generate` command is the recommended way to generate plugins. The `generate plugins`, `generate agents`, `generate all`, and `generate deployment` subcommands are deprecated.
+!!! note "v0.10.0 Update"
+    As of v0.10.0, the `generate` command automatically validates specs before generation. Use `--skip-validate` to bypass validation if needed.
 
 ## Synopsis
 
@@ -15,6 +15,43 @@ assistantkit generate [flags]
 
 This command reads plugin definitions from a unified specs directory and generates complete platform-specific plugins for each deployment target. Each target receives agents, commands, skills, and plugin manifest.
 
+### Automatic Validation
+
+Before generation, the command validates the specs directory to catch errors early:
+
+```bash
+assistantkit generate --specs=specs
+
+=== AssistantKit Generator ===
+Specs directory: /path/to/specs
+Target: local
+Output directory: .
+
+Validating specs...
+✓ Validation passed (6 agents, 4 skills, 2 commands)
+
+Team: my-team
+Loaded: 2 commands, 4 skills, 6 agents
+
+Generated targets:
+  - local-kiro: plugins/kiro
+  - local-claude: .claude/agents
+
+Done!
+```
+
+Validation checks include:
+
+- **plugin.json** — required fields present, valid JSON
+- **agents** — valid YAML frontmatter with required fields
+- **skills** — valid skill definitions
+- **commands** — valid command definitions
+- **skill-refs** — agent skill references resolve to existing skills
+- **teams** — DAG acyclicity, agent references, input `from` references
+- **deployments** — valid platforms, no output path conflicts
+
+Use `--skip-validate` to bypass validation if needed.
+
 ## Flags
 
 | Flag | Default | Description |
@@ -22,6 +59,7 @@ This command reads plugin definitions from a unified specs directory and generat
 | `--specs` | `specs` | Path to unified specs directory |
 | `--target` | `local` | Deployment target (looks for `specs/deployments/<target>.json`) |
 | `--output` | `.` | Output base directory for relative paths |
+| `--skip-validate` | `false` | Skip validation before generation |
 
 ## Supported Platforms
 
@@ -135,7 +173,10 @@ Deployment configurations defining output targets:
     {
       "name": "local-kiro",
       "platform": "kiro-cli",
-      "output": "plugins/kiro"
+      "output": "plugins/kiro",
+      "kiroCli": {
+        "prefix": "myteam_"
+      }
     },
     {
       "name": "local-gemini",
@@ -145,6 +186,17 @@ Deployment configurations defining output targets:
   ]
 }
 ```
+
+#### Kiro Prefix Configuration
+
+For Kiro CLI targets, you can specify a prefix in the `kiroCli` field. This prefix is applied to:
+
+- Agent JSON filenames: `myteam_pm.json`
+- Agent name field: `"name": "myteam_pm"`
+- Steering filenames: `myteam_code-review.md`
+- README examples: `kiro-cli chat --agent myteam_pm`
+
+This enables multiple teams to share a single Kiro agents directory without naming conflicts. Define the prefix once in the deployment config—agent source files use short names (e.g., `pm`), and the prefix is applied during generation.
 
 ## Generated Output
 
@@ -219,6 +271,7 @@ The following subcommands are deprecated and will show warnings when used:
 
 ## See Also
 
+- [Validate Command](validate.md) - Standalone validation command
 - [Plugin Structure](../plugins/structure.md) - Learn about plugin components
 - [Commands](../plugins/commands.md) - Command definition details
 - [Skills](../plugins/skills.md) - Skill definition details

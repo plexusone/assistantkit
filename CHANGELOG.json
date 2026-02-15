@@ -8,24 +8,36 @@
   "releases": [
     {
       "version": "v0.10.0",
-      "date": "2026-02-14",
+      "date": "2026-02-15",
       "highlights": [
         { "description": "New `validate` command for specs directory validation before generation" },
-        { "description": "Kiro CLI integration improvements with usage documentation and prefix support" }
+        { "description": "Single-source prefix for Kiro: define prefix once in deployment config, applied everywhere" },
+        { "description": "Team DAG validation with agent reference checking" }
       ],
       "added": [
         { "description": "`assistantkit validate` command for pre-generation validation of specs directories", "commit": "0e66a0d" },
-        { "description": "`generate.Validate()` function returning `ValidateResult` with checks, errors, and warnings", "commit": "0e66a0d" },
+        { "description": "`generate.Validate()` function returning `ValidateResult` with checks, errors, warnings, and stats", "commit": "0e66a0d" },
+        { "description": "Team DAG validation: acyclicity check, agent reference resolution, input `from` reference validation", "commit": "3c8a75e" },
+        { "description": "`--skip-validate` flag for `generate` command to bypass validation", "commit": "3c8a75e" },
+        { "description": "Single-source prefix: `kiroCli.prefix` in deployment config applies to agent names, filenames, and README", "commit": "3c8a75e" },
+        { "description": "`convertToKiroAgentWithName()` for prefixed agent name generation", "commit": "3c8a75e" },
+        { "description": "`buildKiroAgentsReadmeWithPrefix()` for prefixed README generation", "commit": "3c8a75e" },
         { "description": "Kiro CLI usage examples in generated README with coordinator detection", "commit": "17a53a9" },
         { "description": "Installation section in generated Kiro README for kiro-cli setup", "commit": "17a53a9" }
       ],
+      "changed": [
+        { "description": "`generate` command now runs validation by default before generation", "commit": "3c8a75e" },
+        { "description": "`KiroTargetConfig` extended with `PluginDir` and `Format` fields", "commit": "3c8a75e" },
+        { "description": "`DeploymentTarget` struct now includes `KiroCli` field for structured config", "commit": "3c8a75e" }
+      ],
       "fixed": [
         { "description": "Kiro steering file names now correctly apply prefix from deployment config", "commit": "878625d" },
-        { "description": "`KiroTargetConfig` with `Prefix` field and `DeploymentTarget.ParseKiroConfig()` method", "commit": "878625d" },
+        { "description": "Kiro agent JSON filenames and name fields now apply prefix from deployment config", "commit": "3c8a75e" },
         { "description": "Kiro agent tool mapping now includes `execute_bash`, `fs_read`, `fs_write`", "commit": "cebcb40" }
       ],
       "documentation": [
-        { "description": "Added enhancement proposal for validate and test commands", "commit": "1aff391" }
+        { "description": "Added enhancement proposal for validate and test commands", "commit": "1aff391" },
+        { "description": "Updated enhancement doc with implementation status and single-source prefix docs", "commit": "2207fed" }
       ],
       "dependencies": [
         { "description": "Upgraded `gogithub` v0.8.0 → v0.9.0", "commit": "2939278" }
