@@ -310,15 +310,17 @@ func generateKiroAgentsWithPrefix(dir string, plugin *PluginSpec, skls []*skills
 		return err
 	}
 
-	// Write agents as JSON files
+	// Write agents as JSON files with prefix applied to names
 	if len(agts) > 0 {
 		agentsDir := filepath.Join(dir, "agents")
 		if err := os.MkdirAll(agentsDir, 0755); err != nil {
 			return err
 		}
 		for _, agt := range agts {
-			path := filepath.Join(agentsDir, agt.Name+".json")
-			data, err := json.MarshalIndent(convertToKiroAgent(agt), "", "  ")
+			// Apply prefix to agent name for Kiro (no namespacing)
+			prefixedName := prefix + agt.Name
+			path := filepath.Join(agentsDir, prefixedName+".json")
+			data, err := json.MarshalIndent(convertToKiroAgentWithName(agt, prefixedName), "", "  ")
 			if err != nil {
 				return fmt.Errorf("marshal agent %s: %w", agt.Name, err)
 			}
@@ -328,7 +330,7 @@ func generateKiroAgentsWithPrefix(dir string, plugin *PluginSpec, skls []*skills
 		}
 	}
 
-	// Write skills as steering files
+	// Write skills as steering files with prefix applied
 	if len(skls) > 0 {
 		steeringDir := filepath.Join(dir, "steering")
 		if err := os.MkdirAll(steeringDir, 0755); err != nil {
@@ -336,11 +338,8 @@ func generateKiroAgentsWithPrefix(dir string, plugin *PluginSpec, skls []*skills
 		}
 		for _, skl := range skls {
 			// Apply prefix to steering filename to match agent naming convention
-			filename := skl.Name
-			if prefix != "" {
-				filename = prefix + filename
-			}
-			path := filepath.Join(steeringDir, filename+".md")
+			prefixedName := prefix + skl.Name
+			path := filepath.Join(steeringDir, prefixedName+".md")
 			content := buildSteeringContent(skl)
 			if err := os.WriteFile(path, []byte(content), 0644); err != nil {
 				return fmt.Errorf("write steering %s: %w", skl.Name, err)
@@ -348,8 +347,8 @@ func generateKiroAgentsWithPrefix(dir string, plugin *PluginSpec, skls []*skills
 		}
 	}
 
-	// Write README
-	readme := buildKiroAgentsReadme(plugin, agts, skls)
+	// Write README with prefixed names
+	readme := buildKiroAgentsReadmeWithPrefix(plugin, agts, skls, prefix)
 	if err := os.WriteFile(filepath.Join(dir, "README.md"), []byte(readme), 0644); err != nil {
 		return fmt.Errorf("write README: %w", err)
 	}
@@ -367,8 +366,12 @@ type KiroAgent struct {
 }
 
 func convertToKiroAgent(agt *agents.Agent) *KiroAgent {
+	return convertToKiroAgentWithName(agt, agt.Name)
+}
+
+func convertToKiroAgentWithName(agt *agents.Agent, name string) *KiroAgent {
 	return &KiroAgent{
-		Name:        agt.Name,
+		Name:        name,
 		Description: agt.Description,
 		Prompt:      agt.Instructions,
 		Model:       string(agt.Model),
@@ -412,6 +415,10 @@ func buildSteeringContent(skl *skills.Skill) string {
 }
 
 func buildKiroAgentsReadme(plugin *PluginSpec, agts []*agents.Agent, skls []*skills.Skill) string {
+	return buildKiroAgentsReadmeWithPrefix(plugin, agts, skls, "")
+}
+
+func buildKiroAgentsReadmeWithPrefix(plugin *PluginSpec, agts []*agents.Agent, skls []*skills.Skill, prefix string) string {
 	var sb stringBuilder
 
 	title := plugin.DisplayName
@@ -426,7 +433,8 @@ func buildKiroAgentsReadme(plugin *PluginSpec, agts []*agents.Agent, skls []*ski
 		sb.WriteString("| Agent | Description |\n")
 		sb.WriteString("|-------|-------------|\n")
 		for _, agt := range agts {
-			sb.WriteString(fmt.Sprintf("| `%s` | %s |\n", agt.Name, agt.Description))
+			prefixedName := prefix + agt.Name
+			sb.WriteString(fmt.Sprintf("| `%s` | %s |\n", prefixedName, agt.Description))
 		}
 		sb.WriteString("\n")
 
@@ -436,7 +444,7 @@ func buildKiroAgentsReadme(plugin *PluginSpec, agts []*agents.Agent, skls []*ski
 		sb.WriteString("```bash\n")
 
 		// Show example with first agent
-		firstAgent := agts[0].Name
+		firstAgent := prefix + agts[0].Name
 		sb.WriteString(fmt.Sprintf("kiro-cli chat --agent %s \"<your prompt>\"\n", firstAgent))
 		sb.WriteString("```\n\n")
 
@@ -444,7 +452,7 @@ func buildKiroAgentsReadme(plugin *PluginSpec, agts []*agents.Agent, skls []*ski
 		var coordinatorName string
 		for _, agt := range agts {
 			if hasSubstring(agt.Name, "coordinator") || hasSubstring(agt.Name, "orchestrator") {
-				coordinatorName = agt.Name
+				coordinatorName = prefix + agt.Name
 				break
 			}
 		}
@@ -752,16 +760,28 @@ type DeploymentTarget struct {
 	Priority string          `json:"priority,omitempty"`
 	Output   string          `json:"output"`
 	Config   json.RawMessage `json:"config,omitempty"`
+	// KiroCli contains Kiro CLI-specific configuration.
+	KiroCli *KiroTargetConfig `json:"kiroCli,omitempty"`
 }
 
 // KiroTargetConfig contains Kiro-specific deployment configuration.
 type KiroTargetConfig struct {
 	// Prefix is prepended to agent and steering file names (e.g., "cext_").
 	Prefix string `json:"prefix,omitempty"`
+	// PluginDir is the output directory for the plugin.
+	PluginDir string `json:"pluginDir,omitempty"`
+	// Format is the output format (json, yaml).
+	Format string `json:"format,omitempty"`
 }
 
 // ParseKiroConfig extracts Kiro-specific config from a deployment target.
+// Checks both the structured kiroCli field and the generic config field.
 func (t *DeploymentTarget) ParseKiroConfig() *KiroTargetConfig {
+	// Prefer structured kiroCli field
+	if t.KiroCli != nil {
+		return t.KiroCli
+	}
+	// Fall back to generic config field
 	if len(t.Config) == 0 {
 		return &KiroTargetConfig{}
 	}

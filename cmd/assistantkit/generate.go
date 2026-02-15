@@ -11,9 +11,10 @@ import (
 )
 
 var (
-	genSpecsDir  string
-	genTarget    string
-	genOutputDir string
+	genSpecsDir     string
+	genTarget       string
+	genOutputDir    string
+	genSkipValidate bool
 )
 
 var generateCmd = &cobra.Command{
@@ -155,6 +156,7 @@ func init() {
 	generateCmd.Flags().StringVar(&genSpecsDir, "specs", "specs", "Path to unified specs directory")
 	generateCmd.Flags().StringVar(&genTarget, "target", "local", "Deployment target (looks for specs/deployments/<target>.json)")
 	generateCmd.Flags().StringVar(&genOutputDir, "output", ".", "Output base directory for relative paths")
+	generateCmd.Flags().BoolVar(&genSkipValidate, "skip-validate", false, "Skip validation before generation")
 
 	generatePluginsCmd.Flags().StringVar(&specDir, "spec", "plugins/spec", "Path to canonical spec directory")
 	generatePluginsCmd.Flags().StringVar(&outputDir, "output", "plugins", "Output directory for generated plugins")
@@ -198,6 +200,25 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 	fmt.Printf("Target: %s\n", genTarget)
 	fmt.Printf("Output directory: %s\n", absOutputDir)
 	fmt.Println()
+
+	// Run validation unless skipped
+	if !genSkipValidate {
+		fmt.Println("Validating specs...")
+		validateResult := generate.Validate(absSpecsDir)
+
+		if !validateResult.IsValid() {
+			fmt.Println()
+			fmt.Println("Validation failed:")
+			for _, e := range validateResult.Errors {
+				fmt.Printf("  ✗ %s: %s\n", e.File, e.Message)
+			}
+			fmt.Println()
+			fmt.Println("Fix the above errors and re-run, or use --skip-validate to bypass.")
+			return fmt.Errorf("validation failed with %d error(s)", len(validateResult.Errors))
+		}
+		fmt.Printf("✓ Validation passed (%d agents, %d skills, %d commands)\n\n",
+			validateResult.Stats.Agents, validateResult.Stats.Skills, validateResult.Stats.Commands)
+	}
 
 	// Generate using the unified Generate function
 	result, err := generate.Generate(absSpecsDir, genTarget, absOutputDir)

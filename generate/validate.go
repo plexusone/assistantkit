@@ -10,6 +10,7 @@ import (
 	"github.com/agentplexus/assistantkit/agents"
 	"github.com/agentplexus/assistantkit/commands"
 	"github.com/agentplexus/assistantkit/skills"
+	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
 )
 
 // ValidateResult contains the results of specs validation.
@@ -46,6 +47,9 @@ type ValidateStats struct {
 	Agents      int
 	Commands    int
 	Skills      int
+	Teams       int
+	Steps       int
+	Phases      int
 	Deployments int
 	Targets     int
 }
@@ -116,6 +120,9 @@ func Validate(specsDir string) *ValidateResult {
 
 	// Validate agent skill references
 	validateAgentSkillRefs(agentMap, skillMap, result)
+
+	// Validate teams (DAG, agent refs)
+	validateTeamsDir(specsDir, agentMap, result)
 
 	// Validate deployments
 	validateDeploymentsDir(specsDir, result)
@@ -273,6 +280,185 @@ func validateAgentSkillRefs(agentMap map[string]*agents.Agent, skillMap map[stri
 	} else if totalRefs > 0 {
 		result.addCheck("skill-refs", true, fmt.Sprintf("%d references resolve", totalRefs))
 	}
+}
+
+func validateTeamsDir(specsDir string, agentMap map[string]*agents.Agent, result *ValidateResult) {
+	teamsDir := filepath.Join(specsDir, "teams")
+
+	if _, err := os.Stat(teamsDir); os.IsNotExist(err) {
+		result.addCheck("teams", true, "no teams/ directory (optional)")
+		return
+	}
+
+	entries, err := os.ReadDir(teamsDir)
+	if err != nil {
+		result.addCheck("teams", false, fmt.Sprintf("read error: %v", err))
+		result.addError("teams", teamsDir, fmt.Sprintf("cannot read: %v", err))
+		return
+	}
+
+	var teamCount int
+	var totalSteps int
+	var totalPhases int
+	var errorCount int
+
+	for _, entry := range entries {
+		if entry.IsDir() || filepath.Ext(entry.Name()) != ".json" {
+			continue
+		}
+
+		teamCount++
+		path := filepath.Join(teamsDir, entry.Name())
+
+		data, err := os.ReadFile(path)
+		if err != nil {
+			errorCount++
+			result.addError("teams", path, fmt.Sprintf("cannot read: %v", err))
+			continue
+		}
+
+		var team multiagentspec.Team
+		if err := json.Unmarshal(data, &team); err != nil {
+			errorCount++
+			result.addError("teams", path, fmt.Sprintf("invalid JSON: %v", err))
+			continue
+		}
+
+		// Validate workflow exists
+		if team.Workflow == nil || len(team.Workflow.Steps) == 0 {
+			result.addWarning("teams", path, "no workflow steps defined")
+			continue
+		}
+
+		totalSteps += len(team.Workflow.Steps)
+
+		// Build step map for reference checking
+		stepMap := make(map[string]*multiagentspec.Step)
+		stepOutputs := make(map[string]map[string]bool) // step -> output names
+		for i := range team.Workflow.Steps {
+			step := &team.Workflow.Steps[i]
+			stepMap[step.Name] = step
+			stepOutputs[step.Name] = make(map[string]bool)
+			for _, out := range step.Outputs {
+				stepOutputs[step.Name][out.Name] = true
+			}
+		}
+
+		// Validate agent references in steps
+		for _, step := range team.Workflow.Steps {
+			if step.Agent == "" {
+				errorCount++
+				result.addError("teams", path, fmt.Sprintf("step '%s' has no agent", step.Name))
+				continue
+			}
+			if _, ok := agentMap[step.Agent]; !ok {
+				errorCount++
+				result.addError("teams", path, fmt.Sprintf("step '%s' references unknown agent: %s", step.Name, step.Agent))
+			}
+		}
+
+		// Validate depends_on references
+		for _, step := range team.Workflow.Steps {
+			for _, dep := range step.DependsOn {
+				if _, ok := stepMap[dep]; !ok {
+					errorCount++
+					result.addError("teams", path, fmt.Sprintf("step '%s' depends on unknown step: %s", step.Name, dep))
+				}
+			}
+		}
+
+		// Validate input 'from' references (format: step_name.output_name)
+		for _, step := range team.Workflow.Steps {
+			for _, input := range step.Inputs {
+				if input.From == "" {
+					continue
+				}
+				parts := strings.SplitN(input.From, ".", 2)
+				if len(parts) != 2 {
+					errorCount++
+					result.addError("teams", path, fmt.Sprintf("step '%s' input '%s' has invalid from reference: %s (expected step.output)", step.Name, input.Name, input.From))
+					continue
+				}
+				srcStep, srcOutput := parts[0], parts[1]
+				if _, ok := stepMap[srcStep]; !ok {
+					errorCount++
+					result.addError("teams", path, fmt.Sprintf("step '%s' input '%s' references unknown step: %s", step.Name, input.Name, srcStep))
+				} else if !stepOutputs[srcStep][srcOutput] {
+					result.addWarning("teams", path, fmt.Sprintf("step '%s' input '%s' references undeclared output: %s.%s", step.Name, input.Name, srcStep, srcOutput))
+				}
+			}
+		}
+
+		// Check for cycles using topological sort
+		phases, err := topologicalSort(team.Workflow.Steps)
+		if err != nil {
+			errorCount++
+			result.addError("teams", path, fmt.Sprintf("DAG error: %v", err))
+		} else {
+			totalPhases += len(phases)
+		}
+	}
+
+	result.Stats.Teams = teamCount
+	result.Stats.Steps = totalSteps
+	result.Stats.Phases = totalPhases
+
+	if errorCount > 0 {
+		result.addCheck("teams", false, fmt.Sprintf("%d teams, %d steps, %d errors", teamCount, totalSteps, errorCount))
+	} else if teamCount > 0 {
+		result.addCheck("teams", true, fmt.Sprintf("%d teams, %d steps, %d phases", teamCount, totalSteps, totalPhases))
+	} else {
+		result.addCheck("teams", true, "no team files found")
+	}
+}
+
+// topologicalSort performs a topological sort on workflow steps.
+// Returns phases (groups of steps that can run in parallel) or error if cycle detected.
+func topologicalSort(steps []multiagentspec.Step) ([][]string, error) {
+	// Build dependency graph
+	inDegree := make(map[string]int)
+	dependents := make(map[string][]string)
+
+	for _, step := range steps {
+		if _, exists := inDegree[step.Name]; !exists {
+			inDegree[step.Name] = 0
+		}
+		for _, dep := range step.DependsOn {
+			inDegree[step.Name]++
+			dependents[dep] = append(dependents[dep], step.Name)
+		}
+	}
+
+	// Process in phases (BFS by level)
+	var phases [][]string
+	remaining := len(steps)
+
+	for remaining > 0 {
+		// Find all steps with no remaining dependencies
+		var phase []string
+		for _, step := range steps {
+			if inDegree[step.Name] == 0 {
+				phase = append(phase, step.Name)
+			}
+		}
+
+		if len(phase) == 0 {
+			return nil, fmt.Errorf("circular dependency detected")
+		}
+
+		phases = append(phases, phase)
+
+		// Remove processed steps and update dependents
+		for _, name := range phase {
+			inDegree[name] = -1 // Mark as processed
+			remaining--
+			for _, dependent := range dependents[name] {
+				inDegree[dependent]--
+			}
+		}
+	}
+
+	return phases, nil
 }
 
 func validateDeploymentsDir(specsDir string, result *ValidateResult) {
