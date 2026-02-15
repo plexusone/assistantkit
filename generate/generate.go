@@ -232,6 +232,10 @@ func generateClaude(dir string, plugin *PluginSpec, cmds []*commands.Command, sk
 }
 
 func generateKiro(dir string, plugin *PluginSpec, skls []*skills.Skill, agts []*agents.Agent) error {
+	return generateKiroWithConfig(dir, plugin, skls, agts, nil)
+}
+
+func generateKiroWithConfig(dir string, plugin *PluginSpec, skls []*skills.Skill, agts []*agents.Agent, cfg *KiroTargetConfig) error {
 	// Determine Kiro format based on plugin spec:
 	// - If keywords or MCP servers are present, generate a Kiro Power
 	// - Otherwise, generate Kiro Agents format
@@ -240,7 +244,14 @@ func generateKiro(dir string, plugin *PluginSpec, skls []*skills.Skill, agts []*
 	if isPower {
 		return generateKiroPower(dir, plugin, skls)
 	}
-	return generateKiroAgents(dir, plugin, skls, agts)
+	return generateKiroAgentsWithPrefix(dir, plugin, skls, agts, cfg.getPrefix())
+}
+
+func (c *KiroTargetConfig) getPrefix() string {
+	if c == nil {
+		return ""
+	}
+	return c.Prefix
 }
 
 func generateKiroPower(dir string, plugin *PluginSpec, skls []*skills.Skill) error {
@@ -292,7 +303,7 @@ func generateKiroPower(dir string, plugin *PluginSpec, skls []*skills.Skill) err
 	return nil
 }
 
-func generateKiroAgents(dir string, plugin *PluginSpec, skls []*skills.Skill, agts []*agents.Agent) error {
+func generateKiroAgentsWithPrefix(dir string, plugin *PluginSpec, skls []*skills.Skill, agts []*agents.Agent, prefix string) error {
 	// Create output directory
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return err
@@ -323,7 +334,12 @@ func generateKiroAgents(dir string, plugin *PluginSpec, skls []*skills.Skill, ag
 			return err
 		}
 		for _, skl := range skls {
-			path := filepath.Join(steeringDir, skl.Name+".md")
+			// Apply prefix to steering filename to match agent naming convention
+			filename := skl.Name
+			if prefix != "" {
+				filename = prefix + filename
+			}
+			path := filepath.Join(steeringDir, filename+".md")
 			content := buildSteeringContent(skl)
 			if err := os.WriteFile(path, []byte(content), 0644); err != nil {
 				return fmt.Errorf("write steering %s: %w", skl.Name, err)
@@ -699,6 +715,24 @@ type DeploymentTarget struct {
 	Config   json.RawMessage `json:"config,omitempty"`
 }
 
+// KiroTargetConfig contains Kiro-specific deployment configuration.
+type KiroTargetConfig struct {
+	// Prefix is prepended to agent and steering file names (e.g., "cext_").
+	Prefix string `json:"prefix,omitempty"`
+}
+
+// ParseKiroConfig extracts Kiro-specific config from a deployment target.
+func (t *DeploymentTarget) ParseKiroConfig() *KiroTargetConfig {
+	if len(t.Config) == 0 {
+		return &KiroTargetConfig{}
+	}
+	var cfg KiroTargetConfig
+	if err := json.Unmarshal(t.Config, &cfg); err != nil {
+		return &KiroTargetConfig{}
+	}
+	return &cfg
+}
+
 // DeploymentSpec represents a deployment definition.
 type DeploymentSpec struct {
 	Team    string             `json:"team"`
@@ -956,7 +990,7 @@ func Generate(specsDir, target, outputDir string) (*GenerateResult, error) {
 			targetOutputDir = filepath.Join(outputDir, targetOutputDir)
 		}
 
-		if err := generatePlatformPlugin(tgt.Platform, targetOutputDir, plugin, cmds, skls, agts); err != nil {
+		if err := generatePlatformPlugin(tgt, targetOutputDir, plugin, cmds, skls, agts); err != nil {
 			return nil, fmt.Errorf("generating target %s: %w", tgt.Name, err)
 		}
 
@@ -970,7 +1004,7 @@ func Generate(specsDir, target, outputDir string) (*GenerateResult, error) {
 // generatePlatformPlugin generates a complete plugin for a specific platform.
 // It combines agents, commands, skills, and plugin manifest into a platform-specific format.
 func generatePlatformPlugin(
-	platform string,
+	target DeploymentTarget,
 	outputDir string,
 	plugin *PluginSpec,
 	cmds []*commands.Command,
@@ -982,17 +1016,18 @@ func generatePlatformPlugin(
 		return fmt.Errorf("creating output dir: %w", err)
 	}
 
-	switch platform {
+	switch target.Platform {
 	case "claude", "claude-code":
 		return generateClaude(outputDir, plugin, cmds, skls, agts)
 	case "kiro", "kiro-cli":
-		return generateKiro(outputDir, plugin, skls, agts)
+		cfg := target.ParseKiroConfig()
+		return generateKiroWithConfig(outputDir, plugin, skls, agts, cfg)
 	case "gemini", "gemini-cli":
 		return generateGemini(outputDir, plugin, cmds)
 	default:
 		// For unsupported platforms, log a warning but don't fail
-		fmt.Printf("  Warning: platform %s not fully supported, generating agents only\n", platform)
-		return generateDeploymentTargetAgentsOnly(platform, agts, outputDir)
+		fmt.Printf("  Warning: platform %s not fully supported, generating agents only\n", target.Platform)
+		return generateDeploymentTargetAgentsOnly(target.Platform, agts, outputDir)
 	}
 }
 
