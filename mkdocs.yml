@@ -48,6 +48,7 @@ nav:
       - Validate: cli/validate.md
   - Deployments:
       - Overview: deployments/overview.md
+      - Claude Code: deployments/claude-code.md
       - Kiro CLI: deployments/kiro-cli.md
   - Plugins:
       - Plugin Structure: plugins/structure.md

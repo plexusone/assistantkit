@@ -250,9 +250,9 @@ assistantkit generate --specs=specs --skip-validate
 
 Each platform receives a complete plugin in its native format. See platform-specific guides for details:
 
+- [Claude Code Deployment](claude-code.md)
 - [Kiro CLI Deployment](kiro-cli.md)
-- [Claude Code Deployment](claude-code.md) (coming soon)
-- [Gemini CLI Deployment](gemini-cli.md) (coming soon)
+- Gemini CLI Deployment (coming when sub-agent support is available)
 
 ## Multi-Team Deployments
 
