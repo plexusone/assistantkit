@@ -1,11 +1,36 @@
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "assistantkit",
   "repository": "https://github.com/agentplexus/assistantkit",
   "versioning": "semver",
-  "commit_convention": "conventional",
+  "commitConvention": "conventional",
   "maintainers": ["agentplexus"],
   "releases": [
+    {
+      "version": "v0.10.0",
+      "date": "2026-02-14",
+      "highlights": [
+        { "description": "New `validate` command for specs directory validation before generation" },
+        { "description": "Kiro CLI integration improvements with usage documentation and prefix support" }
+      ],
+      "added": [
+        { "description": "`assistantkit validate` command for pre-generation validation of specs directories", "commit": "0e66a0d" },
+        { "description": "`generate.Validate()` function returning `ValidateResult` with checks, errors, and warnings", "commit": "0e66a0d" },
+        { "description": "Kiro CLI usage examples in generated README with coordinator detection", "commit": "17a53a9" },
+        { "description": "Installation section in generated Kiro README for kiro-cli setup", "commit": "17a53a9" }
+      ],
+      "fixed": [
+        { "description": "Kiro steering file names now correctly apply prefix from deployment config", "commit": "878625d" },
+        { "description": "`KiroTargetConfig` with `Prefix` field and `DeploymentTarget.ParseKiroConfig()` method", "commit": "878625d" },
+        { "description": "Kiro agent tool mapping now includes `execute_bash`, `fs_read`, `fs_write`", "commit": "cebcb40" }
+      ],
+      "documentation": [
+        { "description": "Added enhancement proposal for validate and test commands", "commit": "1aff391" }
+      ],
+      "dependencies": [
+        { "description": "Upgraded `gogithub` v0.8.0 → v0.9.0", "commit": "2939278" }
+      ]
+    },
     {
       "version": "v0.9.0",
       "date": "2026-02-02",
