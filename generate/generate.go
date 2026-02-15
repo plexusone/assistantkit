@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/agentplexus/assistantkit/agents"
 	"github.com/agentplexus/assistantkit/commands"
@@ -428,6 +429,31 @@ func buildKiroAgentsReadme(plugin *PluginSpec, agts []*agents.Agent, skls []*ski
 			sb.WriteString(fmt.Sprintf("| `%s` | %s |\n", agt.Name, agt.Description))
 		}
 		sb.WriteString("\n")
+
+		// Add CLI usage examples
+		sb.WriteString("## Usage\n\n")
+		sb.WriteString("Run an agent with the Kiro CLI:\n\n")
+		sb.WriteString("```bash\n")
+
+		// Show example with first agent
+		firstAgent := agts[0].Name
+		sb.WriteString(fmt.Sprintf("kiro-cli chat --agent %s \"<your prompt>\"\n", firstAgent))
+		sb.WriteString("```\n\n")
+
+		// If there's a coordinator agent, show team usage
+		var coordinatorName string
+		for _, agt := range agts {
+			if hasSubstring(agt.Name, "coordinator") || hasSubstring(agt.Name, "orchestrator") {
+				coordinatorName = agt.Name
+				break
+			}
+		}
+		if coordinatorName != "" {
+			sb.WriteString("Run the full team (coordinator-driven):\n\n")
+			sb.WriteString("```bash\n")
+			sb.WriteString(fmt.Sprintf("kiro-cli chat --agent %s \"<your prompt>\"\n", coordinatorName))
+			sb.WriteString("```\n\n")
+		}
 	}
 
 	if len(skls) > 0 {
@@ -439,7 +465,20 @@ func buildKiroAgentsReadme(plugin *PluginSpec, agts []*agents.Agent, skls []*ski
 		sb.WriteString("```\n\n")
 	}
 
+	// Installation section
+	sb.WriteString("## Installation\n\n")
+	sb.WriteString("Copy agents to your Kiro agents directory:\n\n")
+	sb.WriteString("```bash\n")
+	sb.WriteString("mkdir -p ~/.kiro/agents\n")
+	sb.WriteString("cp agents/*.json ~/.kiro/agents/\n")
+	sb.WriteString("```\n")
+
 	return sb.String()
+}
+
+// hasSubstring checks if s contains substr (case-insensitive).
+func hasSubstring(s, substr string) bool {
+	return strings.Contains(strings.ToLower(s), strings.ToLower(substr))
 }
 
 func generateGemini(dir string, plugin *PluginSpec, cmds []*commands.Command) error {
