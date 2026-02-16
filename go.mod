@@ -3,7 +3,7 @@ module github.com/agentplexus/assistantkit
 go 1.24.0
 
 require (
-	github.com/agentplexus/multi-agent-spec/sdk/go v0.5.0
+	github.com/agentplexus/multi-agent-spec/sdk/go v0.6.0
 	github.com/google/go-github/v82 v82.0.0
 	github.com/grokify/gogithub v0.9.0
 	github.com/pelletier/go-toml/v2 v2.2.4

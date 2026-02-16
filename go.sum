@@ -1,5 +1,5 @@
-github.com/agentplexus/multi-agent-spec/sdk/go v0.5.0 h1:fnJU9+2F9+BIyNwjHPsw6HdZL60Q4NjekItAingHYuA=
-github.com/agentplexus/multi-agent-spec/sdk/go v0.5.0/go.mod h1:p44VILyLNN6u8zY51UdXFOeB42Oy+5EcLhQO3EcalGo=
+github.com/agentplexus/multi-agent-spec/sdk/go v0.6.0 h1:R3aXYE4+sjSjDy2ukgoYF7QShA4hOMniIeI/4LKLGh0=
+github.com/agentplexus/multi-agent-spec/sdk/go v0.6.0/go.mod h1:tz8svz+dzU1l7IE/xN9rc8grbIxYW4JdLrtTIBpkDa4=
 github.com/bahlo/generic-list-go v0.2.0 h1:5sz/EEAK+ls5wF+NeqDpk5+iNdMDXrh3z3nPnH1Wvgk=
 github.com/bahlo/generic-list-go v0.2.0/go.mod h1:2KvAjgMlE5NNynlg/5iLrrCCZ2+5xWbdbCW3pNTGyYg=
 github.com/buger/jsonparser v1.1.1 h1:2PnMjfWD7wBILjqQbt530v576A/cAbQvEW9gGIpYMUs=
