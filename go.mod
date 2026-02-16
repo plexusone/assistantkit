@@ -1,11 +1,11 @@
 module github.com/agentplexus/assistantkit
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/agentplexus/multi-agent-spec/sdk/go v0.5.0
 	github.com/google/go-github/v82 v82.0.0
-	github.com/grokify/gogithub v0.9.0
+	github.com/grokify/gogithub v0.9.1
 	github.com/pelletier/go-toml/v2 v2.2.4
 	github.com/spf13/cobra v1.10.2
 	gopkg.in/yaml.v3 v3.0.1
@@ -20,5 +20,5 @@ require (
 	github.com/mailru/easyjson v0.9.1 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
-	golang.org/x/oauth2 v0.34.0 // indirect
+	golang.org/x/oauth2 v0.35.0 // indirect
 )
