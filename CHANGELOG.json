@@ -8,13 +8,18 @@
   "releases": [
     {
       "version": "v0.10.0",
-      "date": "2026-02-15",
+      "date": "2026-02-21",
       "highlights": [
+        { "description": "Self-directed team support with crew, swarm, and council workflow types" },
         { "description": "New `validate` command for specs directory validation before generation" },
         { "description": "Single-source prefix for Kiro: define prefix once in deployment config, applied everywhere" },
         { "description": "Team DAG validation with agent reference checking" }
       ],
       "added": [
+        { "description": "`teams/core.SelfDirectedTeam` wrapper for multi-agent-spec teams with workflow helpers", "commit": "27b71cb" },
+        { "description": "`teams/claude.Adapter` for converting self-directed teams to Claude Code format", "commit": "c3875e8" },
+        { "description": "`generate.Teams()` function for generating platform-specific team files", "commit": "0015566" },
+        { "description": "Re-exported `SelfDirectedTeam`, `SelfDirectedConfig`, `NewSelfDirectedTeam` in `teams` package", "commit": "acf8181" },
         { "description": "`assistantkit validate` command for pre-generation validation of specs directories", "commit": "0e66a0d" },
         { "description": "`generate.Validate()` function returning `ValidateResult` with checks, errors, warnings, and stats", "commit": "0e66a0d" },
         { "description": "Team DAG validation: acyclicity check, agent reference resolution, input `from` reference validation", "commit": "3c8a75e" },
@@ -36,11 +41,17 @@
         { "description": "Kiro agent tool mapping now includes `execute_bash`, `fs_read`, `fs_write`", "commit": "cebcb40" }
       ],
       "documentation": [
+        { "description": "Claude Code deployment guide with plugin structure and sub-agent system", "commit": "69084c1" },
+        { "description": "Kiro CLI deployment guide with prefix configuration and multi-team setup", "commit": "5301b57" },
         { "description": "Added enhancement proposal for validate and test commands", "commit": "1aff391" },
         { "description": "Updated enhancement doc with implementation status and single-source prefix docs", "commit": "2207fed" }
       ],
+      "infrastructure": [
+        { "description": "Updated CI workflows to Go 1.24 and 1.25", "commit": "da1303a" }
+      ],
       "dependencies": [
-        { "description": "Upgraded `gogithub` v0.8.0 → v0.9.0", "commit": "2939278" }
+        { "description": "Upgraded `multi-agent-spec/sdk/go` v0.5.0 → v0.7.0 for self-directed workflow support", "commit": "bf83492" },
+        { "description": "Upgraded `gogithub` v0.8.0 → v0.9.1", "commit": "ad497aa" }
       ]
     },
     {
