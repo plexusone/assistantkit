@@ -114,8 +114,9 @@ type MCPConfig struct {
 
 // LLMConfig configures the language model.
 type LLMConfig struct {
-	Provider    string  `json:"provider"`
-	Model       string  `json:"model"`
+	Provider string `json:"provider"`
+	Model    string `json:"model"`
+	//nolint:gosec // G117: Field name for env var template, not a hardcoded secret
 	APIKey      string  `json:"api_key,omitempty"`
 	BaseURL     string  `json:"base_url,omitempty"`
 	Temperature float64 `json:"temperature,omitempty"`
@@ -222,6 +223,7 @@ func DefaultConfig() *Config {
 			ServerName:    "agentkit-local",
 			ServerVersion: "1.0.0",
 		},
+		//nolint:gosec // G101: Environment variable template, not a hardcoded credential
 		LLM: LLMConfig{
 			Provider:    "anthropic",
 			Model:       "claude-3-5-sonnet-20241022",

@@ -51,6 +51,7 @@ func TestPluginAddOptionalDependency(t *testing.T) {
 func TestPluginAddMCPServer(t *testing.T) {
 	plugin := NewPlugin("test", "1.0.0", "test")
 
+	//nolint:gosec // G101: Environment variable template, not a hardcoded credential
 	plugin.AddMCPServer("github", MCPServer{
 		Command: "npx",
 		Args:    []string{"-y", "@modelcontextprotocol/server-github"},

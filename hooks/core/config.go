@@ -196,6 +196,7 @@ func (c *Config) WriteFileWithMode(path string, mode fs.FileMode) error {
 
 // ReadFile reads a config from a JSON file.
 func ReadFile(path string) (*Config, error) {
+	//nolint:gosec // G703: Path is user-provided config file location
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err

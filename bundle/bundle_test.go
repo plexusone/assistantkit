@@ -106,6 +106,7 @@ func TestGenerateClaude(t *testing.T) {
 	b.Plugin.Author = "agentplexus"
 
 	// Add MCP server
+	//nolint:gosec // G101: Environment variable template, not a hardcoded credential
 	b.AddMCPServer("agentcall", MCPServer{
 		Command: "./agentcall",
 		Env:     map[string]string{"NGROK_AUTHTOKEN": "${NGROK_AUTHTOKEN}"},
@@ -170,6 +171,7 @@ func TestGenerateKiro(t *testing.T) {
 	b := New("agentcall", "0.1.0", "Voice calling for AI assistants")
 
 	// Add MCP server
+	//nolint:gosec // G101: Environment variable template, not a hardcoded credential
 	b.AddMCPServer("agentcall", MCPServer{
 		Command: "./agentcall",
 		Env:     map[string]string{"NGROK_AUTHTOKEN": "${NGROK_AUTHTOKEN}"},

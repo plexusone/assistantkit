@@ -25,14 +25,15 @@ func main() {
 	)
 
 	flag.Usage = func() {
+		//nolint:gosec // G705: CLI usage output to stderr, not web content
 		fmt.Fprintf(os.Stderr, "Usage: %s [options]\n\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "Generate validation area files from canonical specs.\n\n")
 		fmt.Fprintf(os.Stderr, "Options:\n")
 		flag.PrintDefaults()
 		fmt.Fprintf(os.Stderr, "\nExamples:\n")
-		fmt.Fprintf(os.Stderr, "  %s -specs=./specs -output=./output -adapters=claude\n", os.Args[0])
-		fmt.Fprintf(os.Stderr, "  %s -specs=./specs -output=./output -adapters=all\n", os.Args[0])
-		fmt.Fprintf(os.Stderr, "  %s -list\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "  %s -specs=./specs -output=./output -adapters=claude\n", os.Args[0]) //nolint:gosec // G705: CLI usage
+		fmt.Fprintf(os.Stderr, "  %s -specs=./specs -output=./output -adapters=all\n", os.Args[0])    //nolint:gosec // G705: CLI usage
+		fmt.Fprintf(os.Stderr, "  %s -list\n", os.Args[0])                                            //nolint:gosec // G705: CLI usage
 	}
 
 	flag.Parse()
