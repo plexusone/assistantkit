@@ -55,6 +55,8 @@ nav:
       - Commands: plugins/commands.md
       - Skills: plugins/skills.md
       - Agents: plugins/agents.md
+  - Teams:
+      - Overview: teams/overview.md
   - AI Assistants:
       - Claude Code: assistants/claude.md
       - Gemini CLI: assistants/gemini.md

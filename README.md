@@ -33,7 +33,7 @@ AssistantKit is a Go library for managing configuration files across multiple AI
 | **Commands** | Slash command definitions | ✅ Available |
 | **Skills** | Reusable skill definitions | ✅ Available |
 | **Agents** | AI assistant agent definitions | ✅ Available |
-| **Teams** | Multi-agent team orchestration | ✅ Available |
+| **Teams** | Multi-agent team orchestration (deterministic + self-directed) | ✅ Available |
 | **Validation** | Configuration validators | ✅ Available |
 | **Bundle** | Unified bundle generation for multi-tool output | ✅ Available |
 | **Powers** | Kiro IDE power generation (POWER.md, mcp.json) | ✅ Available |
@@ -475,6 +475,71 @@ func main() {
 - **Command hooks**: Execute shell commands
 - **Prompt hooks**: Run AI prompts (Claude-only)
 
+## Teams
+
+The `teams` package provides multi-agent orchestration with support for both deterministic and self-directed workflows.
+
+### Workflow Types
+
+| Category | Type | Pattern | Use Case |
+|----------|------|---------|----------|
+| **Deterministic** | `chain` | A → B → C | Sequential pipeline |
+| **Deterministic** | `scatter` | A → [B,C,D] → E | Parallel fan-out |
+| **Deterministic** | `graph` | DAG | Complex dependencies |
+| **Self-directed** | `crew` | Lead → Specialists | Manager delegates to experts |
+| **Self-directed** | `swarm` | Shared queue | Self-organizing agents |
+| **Self-directed** | `council` | Peer debate | Consensus voting |
+
+### Self-Directed Teams
+
+Self-directed workflows allow agents to autonomously coordinate work using role, goal, and backstory fields:
+
+```go
+import (
+    "github.com/agentplexus/assistantkit/teams"
+    "github.com/agentplexus/assistantkit/teams/core"
+)
+
+// Create from multi-agent-spec definitions
+team, agents := core.FromMultiAgentSpec(masTeam, agentDefs)
+
+// Check workflow type
+if team.IsSelfDirected() {
+    fmt.Println("Workflow:", team.WorkflowType()) // crew, swarm, or council
+}
+
+// Get crew members (for crew workflow)
+lead := team.Lead()
+specialists := team.Specialists()
+```
+
+### Claude Code Adapter
+
+Generate Claude Code agent files with role-based prompts:
+
+```go
+import "github.com/agentplexus/assistantkit/teams/claude"
+
+adapter := claude.NewAdapter()
+files, err := adapter.Convert(selfDirectedTeam)
+// files["architect.md"] contains role, goal, backstory
+// files["teammates.json"] lists team members
+```
+
+### Teams Generation
+
+Generate platform-specific team files:
+
+```go
+import "github.com/agentplexus/assistantkit/generate"
+
+result, err := generate.Teams(generate.TeamsOptions{
+    SpecsDir: "specs",
+    Output:   ".claude/agents",
+    Platform: "claude-code",
+})
+```
+
 ## Project Structure
 
 ```
@@ -537,7 +602,8 @@ assistantkit/
 │   ├── core/               # Canonical types
 │   └── kiro/               # Kiro steering file adapter
 ├── teams/                  # Multi-agent orchestration
-│   └── core/               # Team types and workflows
+│   ├── core/               # Team types, SelfDirectedTeam wrapper
+│   └── claude/             # Claude Code adapter for self-directed teams
 └── validation/             # Configuration validators
     ├── claude/             # Claude validator
     ├── codex/              # Codex validator
