@@ -41,6 +41,9 @@ package teams
 
 import (
 	"github.com/agentplexus/assistantkit/teams/core"
+
+	// Import adapters for side-effect registration
+	_ "github.com/agentplexus/assistantkit/teams/claude"
 )
 
 // Re-export core types for convenience.
@@ -59,6 +62,10 @@ type (
 
 	// Orchestration
 	OrchestrationConfig = core.OrchestrationConfig
+
+	// Self-directed workflow types
+	SelfDirectedTeam   = core.SelfDirectedTeam
+	SelfDirectedConfig = core.SelfDirectedConfig
 )
 
 // Re-export process constants.
@@ -98,6 +105,11 @@ var (
 	// Status computation
 	ComputeTaskStatus = core.ComputeTaskStatus
 	ComputeTeamStatus = core.ComputeTeamStatus
+
+	// Self-directed workflow functions
+	NewSelfDirectedTeam       = core.NewSelfDirectedTeam
+	FromMultiAgentSpec        = core.FromMultiAgentSpec
+	DefaultSelfDirectedConfig = core.DefaultSelfDirectedConfig
 )
 
 // Re-export error types.
