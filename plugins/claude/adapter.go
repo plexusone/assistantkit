@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/agentplexus/assistantkit/plugins/core"
+	"github.com/plexusone/assistantkit/plugins/core"
 )
 
 func init() {

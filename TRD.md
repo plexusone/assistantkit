@@ -330,7 +330,7 @@ Process:
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/agentplexus/assistantkit/plugins/schema/plugin.schema.json",
+  "$id": "https://github.com/plexusone/assistantkit/plugins/schema/plugin.schema.json",
   "title": "AI Assist Kit Plugin",
   "description": "Canonical plugin/extension definition",
   "type": "object",

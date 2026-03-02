@@ -1,7 +1,7 @@
 package claude
 
 import (
-	"github.com/agentplexus/assistantkit/plugins/core"
+	"github.com/plexusone/assistantkit/plugins/core"
 )
 
 // ClaudePlugin represents the Claude Code plugin.json format.

@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/agentplexus/assistantkit/hooks/core"
+	"github.com/plexusone/assistantkit/hooks/core"
 )
 
 func TestNewAdapter(t *testing.T) {

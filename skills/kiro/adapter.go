@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/agentplexus/assistantkit/skills/core"
+	"github.com/plexusone/assistantkit/skills/core"
 )
 
 const (

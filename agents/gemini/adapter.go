@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/agentplexus/assistantkit/agents/core"
 	"github.com/pelletier/go-toml/v2"
+	"github.com/plexusone/assistantkit/agents/core"
 )
 
 func init() {

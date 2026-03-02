@@ -20,7 +20,7 @@
 //   - afterTabFileEdit: Processes Tab edits
 package cursor
 
-import "github.com/agentplexus/assistantkit/hooks/core"
+import "github.com/plexusone/assistantkit/hooks/core"
 
 // CursorEvent represents Cursor-specific hook event names.
 type CursorEvent string

@@ -304,8 +304,8 @@ aiassistkit provides adapters for converting between formats:
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/commands/core"
-    "github.com/agentplexus/assistantkit/commands/gemini"
+    "github.com/plexusone/assistantkit/commands/core"
+    "github.com/plexusone/assistantkit/commands/gemini"
 )
 
 canonical := &core.Command{

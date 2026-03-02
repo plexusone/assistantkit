@@ -19,7 +19,7 @@
 //   - SubagentStop: When subagent stops
 package claude
 
-import "github.com/agentplexus/assistantkit/hooks/core"
+import "github.com/plexusone/assistantkit/hooks/core"
 
 // ClaudeEvent represents Claude-specific hook event names.
 type ClaudeEvent string

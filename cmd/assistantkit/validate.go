@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/agentplexus/assistantkit/generate"
+	"github.com/plexusone/assistantkit/generate"
 	"github.com/spf13/cobra"
 )
 

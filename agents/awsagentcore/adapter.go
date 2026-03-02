@@ -11,9 +11,9 @@ import (
 	"strings"
 	"text/template"
 
-	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
+	multiagentspec "github.com/plexusone/multi-agent-spec/sdk/go"
 
-	"github.com/agentplexus/assistantkit/agents/core"
+	"github.com/plexusone/assistantkit/agents/core"
 )
 
 func init() {

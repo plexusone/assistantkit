@@ -1,8 +1,8 @@
 site_name: Assistant Kit
 site_description: Go library for building plugins for AI coding assistants
-site_url: https://agentplexus.github.io/assistantkit/
-repo_url: https://github.com/agentplexus/assistantkit
-repo_name: agentplexus/assistantkit
+site_url: https://plexusone.github.io/assistantkit/
+repo_url: https://github.com/plexusone/assistantkit
+repo_name: plexusone/assistantkit
 
 theme:
   name: material
@@ -83,4 +83,4 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/agentplexus/assistantkit
+      link: https://github.com/plexusone/assistantkit

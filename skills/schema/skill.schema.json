@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/agentplexus/assistantkit/skills/schema/skill.schema.json",
+  "$id": "https://github.com/plexusone/assistantkit/skills/schema/skill.schema.json",
   "title": "AI Assist Kit Skill",
   "description": "Canonical skill definition for AI coding assistants",
   "type": "object",

@@ -4,7 +4,7 @@
 package core
 
 import (
-	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
+	multiagentspec "github.com/plexusone/multi-agent-spec/sdk/go"
 )
 
 // Agent is an alias for multiagentspec.Agent.

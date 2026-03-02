@@ -238,7 +238,7 @@
 <header>AI Assist Kit: Unified AI Assistant Configuration</header>
 <h1 id="usage-example-reading-config">Usage Example: Reading Config</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-go"><span class="hljs-keyword">import</span> (
-    <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/mcp/claude&quot;</span>
+    <span class="hljs-string">&quot;github.com/plexusone/assistantkit/mcp/claude&quot;</span>
 )
 
 <span class="hljs-comment">// Read Claude&#x27;s project config</span>
@@ -257,9 +257,9 @@ cfg, err := claude.ReadProjectConfig()
 <header>AI Assist Kit: Unified AI Assistant Configuration</header>
 <h1 id="usage-example-converting-formats">Usage Example: Converting Formats</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-go"><span class="hljs-keyword">import</span> (
-    <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/mcp/core&quot;</span>
-    _ <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/mcp/claude&quot;</span>
-    _ <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/mcp/vscode&quot;</span>
+    <span class="hljs-string">&quot;github.com/plexusone/assistantkit/mcp/core&quot;</span>
+    _ <span class="hljs-string">&quot;github.com/plexusone/assistantkit/mcp/claude&quot;</span>
+    _ <span class="hljs-string">&quot;github.com/plexusone/assistantkit/mcp/vscode&quot;</span>
 )
 
 <span class="hljs-comment">// Convert Claude config to VS Code format</span>
@@ -274,8 +274,8 @@ vsCodeData, err := core.Convert(claudeJSON, <span class="hljs-string">&quot;clau
 <header>AI Assist Kit: Unified AI Assistant Configuration</header>
 <h1 id="usage-example-writing-config">Usage Example: Writing Config</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-go"><span class="hljs-keyword">import</span> (
-    <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/mcp/core&quot;</span>
-    <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/mcp/vscode&quot;</span>
+    <span class="hljs-string">&quot;github.com/plexusone/assistantkit/mcp/core&quot;</span>
+    <span class="hljs-string">&quot;github.com/plexusone/assistantkit/mcp/vscode&quot;</span>
 )
 
 <span class="hljs-comment">// Create a new config</span>
@@ -294,7 +294,7 @@ vscode.NewAdapter().WriteFile(cfg, <span class="hljs-string">&quot;.vscode/setti
 <header>AI Assist Kit: Unified AI Assistant Configuration</header>
 <h1 id="agents-package">Agents Package</h1>
 <p>Define AI assistant agents with tools and skills:</p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/agents&quot;</span>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/plexusone/assistantkit/agents&quot;</span>
 
 agent := agents.NewAgent(<span class="hljs-string">&quot;release-coordinator&quot;</span>,
     <span class="hljs-string">&quot;Orchestrates software releases&quot;</span>)
@@ -311,7 +311,7 @@ claudeAdapter.WriteFile(agent, <span class="hljs-string">&quot;./agents/release-
 <header>AI Assist Kit: Unified AI Assistant Configuration</header>
 <h1 id="commands-package">Commands Package</h1>
 <p>Define slash commands across tools:</p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/commands&quot;</span>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/plexusone/assistantkit/commands&quot;</span>
 
 cmd := commands.NewCommand(<span class="hljs-string">&quot;deploy&quot;</span>, <span class="hljs-string">&quot;Deploy to production&quot;</span>)
 cmd.AddRequiredArgument(<span class="hljs-string">&quot;environment&quot;</span>, <span class="hljs-string">&quot;Target environment&quot;</span>)
@@ -330,7 +330,7 @@ geminiAdapter.WriteFile(cmd, <span class="hljs-string">&quot;./commands/deploy.t
 <header>AI Assist Kit: Unified AI Assistant Configuration</header>
 <h1 id="skills-package">Skills Package</h1>
 <p>Define reusable skills:</p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/skills&quot;</span>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/plexusone/assistantkit/skills&quot;</span>
 
 skill := skills.NewSkill(<span class="hljs-string">&quot;code-review&quot;</span>, <span class="hljs-string">&quot;Reviews code for issues&quot;</span>)
 skill.SetPrompt(<span class="hljs-string">&quot;Review this code for bugs and improvements...&quot;</span>)
@@ -432,13 +432,13 @@ go <span class="hljs-built_in">test</span> ./... -v
 <header>AI Assist Kit: Unified AI Assistant Configuration</header>
 <h1 id="getting-started">Getting Started</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-comment"># Install</span>
-go get github.com/agentplexus/assistantkit
+go get github.com/plexusone/assistantkit
 
 <span class="hljs-comment"># Import adapters you need</span>
 import (
-    <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/mcp/core&quot;</span>
-    _ <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/mcp/claude&quot;</span>
-    _ <span class="hljs-string">&quot;github.com/agentplexus/assistantkit/mcp/cursor&quot;</span>
+    <span class="hljs-string">&quot;github.com/plexusone/assistantkit/mcp/core&quot;</span>
+    _ <span class="hljs-string">&quot;github.com/plexusone/assistantkit/mcp/claude&quot;</span>
+    _ <span class="hljs-string">&quot;github.com/plexusone/assistantkit/mcp/cursor&quot;</span>
 )
 </code></pre>
 </section>
@@ -446,7 +446,7 @@ import (
 <header>AI Assist Kit: Unified AI Assistant Configuration</header>
 
 <h1 id="thank-you">Thank You</h1>
-<p><strong>GitHub:</strong> github.com/agentplexus/assistantkit</p>
+<p><strong>GitHub:</strong> github.com/plexusone/assistantkit</p>
 <p><strong>License:</strong> MIT</p>
 <p>Questions?</p>
 </section>

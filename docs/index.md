@@ -28,7 +28,7 @@ Define a canonical command:
 package main
 
 import (
-    "github.com/agentplexus/assistantkit/commands/core"
+    "github.com/plexusone/assistantkit/commands/core"
 )
 
 func main() {

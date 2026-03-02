@@ -20,7 +20,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/agentplexus/assistantkit/powers/core"
+	"github.com/plexusone/assistantkit/powers/core"
 )
 
 const (

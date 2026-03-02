@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
+	multiagentspec "github.com/plexusone/multi-agent-spec/sdk/go"
 )
 
 func TestTeams_CrewWorkflow(t *testing.T) {

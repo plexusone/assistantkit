@@ -10,10 +10,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/agentplexus/assistantkit/validation"
-	_ "github.com/agentplexus/assistantkit/validation/claude" // Register Claude adapter
-	_ "github.com/agentplexus/assistantkit/validation/codex"  // Register Codex adapter
-	_ "github.com/agentplexus/assistantkit/validation/gemini" // Register Gemini adapter
+	"github.com/plexusone/assistantkit/validation"
+	_ "github.com/plexusone/assistantkit/validation/claude" // Register Claude adapter
+	_ "github.com/plexusone/assistantkit/validation/codex"  // Register Codex adapter
+	_ "github.com/plexusone/assistantkit/validation/gemini" // Register Gemini adapter
 )
 
 func main() {

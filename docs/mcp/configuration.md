@@ -128,9 +128,9 @@ Access Slack workspaces:
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/mcp/core"
-    "github.com/agentplexus/assistantkit/mcp/claude"
-    "github.com/agentplexus/assistantkit/mcp/kiro"
+    "github.com/plexusone/assistantkit/mcp/core"
+    "github.com/plexusone/assistantkit/mcp/claude"
+    "github.com/plexusone/assistantkit/mcp/kiro"
 )
 
 // Define canonical config

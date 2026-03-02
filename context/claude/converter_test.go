@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/agentplexus/assistantkit/context/core"
+	"github.com/plexusone/assistantkit/context/core"
 )
 
 func TestNewConverter(t *testing.T) {

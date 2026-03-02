@@ -144,7 +144,7 @@ type Server struct {
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/mcp/claude"
+    "github.com/plexusone/assistantkit/mcp/claude"
 )
 
 // Read Claude's project config
@@ -165,9 +165,9 @@ for name, server := range cfg.Servers {
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/mcp/core"
-    _ "github.com/agentplexus/assistantkit/mcp/claude"
-    _ "github.com/agentplexus/assistantkit/mcp/vscode"
+    "github.com/plexusone/assistantkit/mcp/core"
+    _ "github.com/plexusone/assistantkit/mcp/claude"
+    _ "github.com/plexusone/assistantkit/mcp/vscode"
 )
 
 // Convert Claude config to VS Code format
@@ -185,8 +185,8 @@ Adapters auto-register via `init()` functions.
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/mcp/core"
-    "github.com/agentplexus/assistantkit/mcp/vscode"
+    "github.com/plexusone/assistantkit/mcp/core"
+    "github.com/plexusone/assistantkit/mcp/vscode"
 )
 
 // Create a new config
@@ -221,7 +221,7 @@ vscode.NewAdapter().WriteFile(cfg, ".vscode/settings.json")
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/hooks/core"
+    "github.com/plexusone/assistantkit/hooks/core"
 )
 
 cfg := core.NewConfig()
@@ -247,8 +247,8 @@ cfg.AddHookWithMatcher(core.EventPreToolUse, "Bash", core.Hook{
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/context/core"
-    "github.com/agentplexus/assistantkit/context/claude"
+    "github.com/plexusone/assistantkit/context/core"
+    "github.com/plexusone/assistantkit/context/claude"
 )
 
 // Read CONTEXT.json
@@ -364,13 +364,13 @@ mcp/claude/
 
 ```bash
 # Install
-go get github.com/agentplexus/assistantkit
+go get github.com/plexusone/assistantkit
 
 # Import adapters you need
 import (
-    "github.com/agentplexus/assistantkit/mcp/core"
-    _ "github.com/agentplexus/assistantkit/mcp/claude"
-    _ "github.com/agentplexus/assistantkit/mcp/cursor"
+    "github.com/plexusone/assistantkit/mcp/core"
+    _ "github.com/plexusone/assistantkit/mcp/claude"
+    _ "github.com/plexusone/assistantkit/mcp/cursor"
 )
 ```
 
@@ -391,7 +391,7 @@ import (
 
 # Thank You
 
-**GitHub:** github.com/agentplexus/assistantkit
+**GitHub:** github.com/plexusone/assistantkit
 
 **License:** Open Source
 

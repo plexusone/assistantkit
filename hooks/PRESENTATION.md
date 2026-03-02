@@ -69,7 +69,7 @@ Each AI assistant has its own hook format:
 A **unified interface** for hook configuration:
 
 ```go
-import "github.com/agentplexus/assistantkit/hooks"
+import "github.com/plexusone/assistantkit/hooks"
 
 cfg := hooks.NewConfig()
 cfg.AddHook(hooks.BeforeCommand,
@@ -166,8 +166,8 @@ hook := hooks.NewPromptHook("Is this file write safe?")
 package main
 
 import (
-    "github.com/agentplexus/assistantkit/hooks"
-    "github.com/agentplexus/assistantkit/hooks/claude"
+    "github.com/plexusone/assistantkit/hooks"
+    "github.com/plexusone/assistantkit/hooks/claude"
 )
 
 func main() {
@@ -194,7 +194,7 @@ package main
 
 import (
     "os"
-    "github.com/agentplexus/assistantkit/hooks"
+    "github.com/plexusone/assistantkit/hooks"
 )
 
 func main() {
@@ -413,17 +413,17 @@ hooks.Convert(data, "claude", "cursor")
 ## Install
 
 ```bash
-go get github.com/agentplexus/assistantkit/hooks
+go get github.com/plexusone/assistantkit/hooks
 ```
 
 ## Import
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/hooks"
-    "github.com/agentplexus/assistantkit/hooks/claude"
-    "github.com/agentplexus/assistantkit/hooks/cursor"
-    "github.com/agentplexus/assistantkit/hooks/windsurf"
+    "github.com/plexusone/assistantkit/hooks"
+    "github.com/plexusone/assistantkit/hooks/claude"
+    "github.com/plexusone/assistantkit/hooks/cursor"
+    "github.com/plexusone/assistantkit/hooks/windsurf"
 )
 ```
 
@@ -445,8 +445,8 @@ import (
 
 # Resources
 
-- **GitHub**: [github.com/agentplexus/assistantkit](https://github.com/agentplexus/assistantkit)
-- **Go Docs**: [pkg.go.dev/github.com/agentplexus/assistantkit/hooks](https://pkg.go.dev/github.com/agentplexus/assistantkit/hooks)
+- **GitHub**: [github.com/plexusone/assistantkit](https://github.com/plexusone/assistantkit)
+- **Go Docs**: [pkg.go.dev/github.com/plexusone/assistantkit/hooks](https://pkg.go.dev/github.com/plexusone/assistantkit/hooks)
 - **Claude Code Hooks**: [docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/hooks)
 - **Cursor Hooks**: [docs.cursor.com](https://docs.cursor.com/advanced/hooks)
 
@@ -461,5 +461,5 @@ import (
 **OmniConfig Hooks** - Write once, deploy everywhere.
 
 ```bash
-go get github.com/agentplexus/assistantkit/hooks
+go get github.com/plexusone/assistantkit/hooks
 ```

@@ -4,7 +4,7 @@ The `teams` package provides multi-agent orchestration with support for both det
 
 ## Workflow Categories
 
-AssistantKit supports two workflow paradigms from [multi-agent-spec](https://github.com/agentplexus/multi-agent-spec):
+AssistantKit supports two workflow paradigms from [multi-agent-spec](https://github.com/plexusone/multi-agent-spec):
 
 | Category | Description | Control |
 |----------|-------------|---------|
@@ -55,7 +55,7 @@ Self-directed workflows use role-based agents that autonomously coordinate work.
 The `SelfDirectedTeam` wrapper provides helpers for working with self-directed workflows:
 
 ```go
-import "github.com/agentplexus/assistantkit/teams/core"
+import "github.com/plexusone/assistantkit/teams/core"
 
 // Create from multi-agent-spec definitions
 team, agents := core.FromMultiAgentSpec(masTeam, agentDefs)
@@ -134,7 +134,7 @@ frontend and backend specialists.
 ### Usage
 
 ```go
-import "github.com/agentplexus/assistantkit/teams/claude"
+import "github.com/plexusone/assistantkit/teams/claude"
 
 adapter := claude.NewAdapter()
 files, err := adapter.Convert(selfDirectedTeam)
@@ -153,7 +153,7 @@ for name, content := range files {
 The `generate` package includes team generation for deployment targets:
 
 ```go
-import "github.com/agentplexus/assistantkit/generate"
+import "github.com/plexusone/assistantkit/generate"
 
 result, err := generate.Teams(generate.TeamsOptions{
     SpecsDir: "specs",
@@ -186,9 +186,9 @@ A council workflow for peer code review:
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/teams/core"
-    "github.com/agentplexus/assistantkit/teams/claude"
-    mas "github.com/agentplexus/multi-agent-spec/sdk/go"
+    "github.com/plexusone/assistantkit/teams/core"
+    "github.com/plexusone/assistantkit/teams/claude"
+    mas "github.com/plexusone/multi-agent-spec/sdk/go"
 )
 
 // Define agents with roles
@@ -228,5 +228,5 @@ files, _ := adapter.Convert(sdTeam)
 
 ## See Also
 
-- [multi-agent-spec SDK](https://github.com/agentplexus/multi-agent-spec) - Source schema definitions
+- [multi-agent-spec SDK](https://github.com/plexusone/multi-agent-spec) - Source schema definitions
 - [v0.10.0 Release Notes](../releases/v0.10.0.md) - Self-directed teams feature details

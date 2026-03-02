@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/agentplexus/assistantkit/mcp/core"
+	"github.com/plexusone/assistantkit/mcp/core"
 )
 
 func TestAdapterName(t *testing.T) {

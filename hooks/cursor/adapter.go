@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/agentplexus/assistantkit/hooks/core"
+	"github.com/plexusone/assistantkit/hooks/core"
 )
 
 const (

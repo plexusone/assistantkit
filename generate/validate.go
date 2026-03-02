@@ -7,10 +7,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/agentplexus/assistantkit/agents"
-	"github.com/agentplexus/assistantkit/commands"
-	"github.com/agentplexus/assistantkit/skills"
-	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
+	"github.com/plexusone/assistantkit/agents"
+	"github.com/plexusone/assistantkit/commands"
+	"github.com/plexusone/assistantkit/skills"
+	multiagentspec "github.com/plexusone/multi-agent-spec/sdk/go"
 )
 
 // ValidateResult contains the results of specs validation.

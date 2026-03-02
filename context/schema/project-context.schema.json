@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/agentplexus/assistantkit/context/schema/project-context.schema.json",
+  "$id": "https://github.com/plexusone/assistantkit/context/schema/project-context.schema.json",
   "title": "Project Context Schema",
   "description": "A tool-agnostic schema for describing project context to AI coding assistants",
   "type": "object",

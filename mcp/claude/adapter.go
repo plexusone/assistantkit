@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/agentplexus/assistantkit/mcp/core"
+	"github.com/plexusone/assistantkit/mcp/core"
 )
 
 const (

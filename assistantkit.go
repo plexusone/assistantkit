@@ -18,9 +18,9 @@
 // Example usage:
 //
 //	import (
-//	    "github.com/agentplexus/assistantkit/mcp"
-//	    "github.com/agentplexus/assistantkit/mcp/claude"
-//	    "github.com/agentplexus/assistantkit/mcp/vscode"
+//	    "github.com/plexusone/assistantkit/mcp"
+//	    "github.com/plexusone/assistantkit/mcp/claude"
+//	    "github.com/plexusone/assistantkit/mcp/vscode"
 //	)
 //
 //	// Read Claude config and write to VS Code format
@@ -38,8 +38,8 @@
 // Example usage:
 //
 //	import (
-//	    "github.com/agentplexus/assistantkit/hooks"
-//	    "github.com/agentplexus/assistantkit/hooks/claude"
+//	    "github.com/plexusone/assistantkit/hooks"
+//	    "github.com/plexusone/assistantkit/hooks/claude"
 //	)
 //
 //	// Create hooks configuration

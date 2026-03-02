@@ -206,8 +206,8 @@ aiassistkit provides adapters for converting between canonical and Kiro formats:
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/agents/core"
-    "github.com/agentplexus/assistantkit/agents/kiro"
+    "github.com/plexusone/assistantkit/agents/core"
+    "github.com/plexusone/assistantkit/agents/kiro"
 )
 
 // Create canonical agent

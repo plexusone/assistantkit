@@ -13,7 +13,7 @@
 //
 //	import (
 //	    "fmt"
-//	    "github.com/agentplexus/assistantkit/teams"
+//	    "github.com/plexusone/assistantkit/teams"
 //	)
 //
 //	func main() {
@@ -40,10 +40,10 @@
 package teams
 
 import (
-	"github.com/agentplexus/assistantkit/teams/core"
+	"github.com/plexusone/assistantkit/teams/core"
 
 	// Import adapters for side-effect registration
-	_ "github.com/agentplexus/assistantkit/teams/claude"
+	_ "github.com/plexusone/assistantkit/teams/claude"
 )
 
 // Re-export core types for convenience.

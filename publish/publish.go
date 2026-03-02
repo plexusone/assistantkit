@@ -12,8 +12,8 @@
 //	    "fmt"
 //	    "os"
 //
-//	    "github.com/agentplexus/assistantkit/publish"
-//	    "github.com/agentplexus/assistantkit/publish/claude"
+//	    "github.com/plexusone/assistantkit/publish"
+//	    "github.com/plexusone/assistantkit/publish/claude"
 //	)
 //
 //	func main() {
@@ -33,10 +33,10 @@
 package publish
 
 import (
-	"github.com/agentplexus/assistantkit/publish/core"
+	"github.com/plexusone/assistantkit/publish/core"
 
 	// Import publishers for side-effect registration
-	_ "github.com/agentplexus/assistantkit/publish/claude"
+	_ "github.com/plexusone/assistantkit/publish/claude"
 )
 
 // Re-export core types for convenience.

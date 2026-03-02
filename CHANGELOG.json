@@ -1,10 +1,10 @@
 {
   "irVersion": "1.0",
   "project": "assistantkit",
-  "repository": "https://github.com/agentplexus/assistantkit",
+  "repository": "https://github.com/plexusone/assistantkit",
   "versioning": "semver",
   "commitConvention": "conventional",
-  "maintainers": ["agentplexus"],
+  "maintainers": ["plexusone"],
   "releases": [
     {
       "version": "v0.10.0",
@@ -175,7 +175,7 @@
         { "description": "Module renamed from aiassistkit to assistantkit" }
       ],
       "changed": [
-        { "description": "**BREAKING:** Module path renamed from `github.com/agentplexus/aiassistkit` to `github.com/agentplexus/assistantkit`", "commit": "2232018" },
+        { "description": "**BREAKING:** Module path renamed from `github.com/agentplexus/aiassistkit` to `github.com/plexusone/assistantkit`", "commit": "2232018" },
         { "description": "Package name renamed from `aiassistkit` to `assistantkit`", "commit": "2232018" },
         { "description": "Main source file renamed from `aiassistkit.go` to `assistantkit.go`", "commit": "2232018" }
       ],
@@ -198,14 +198,14 @@
         { "description": "`hooks/windsurf` adapter for Windsurf hooks", "commit": "e7155b9" }
       ],
       "changed": [
-        { "description": "Module path changed from `github.com/grokify/aiassistkit` to `github.com/agentplexus/assistantkit`", "commit": "35abed5" }
+        { "description": "Module path changed from `github.com/grokify/aiassistkit` to `github.com/plexusone/assistantkit`", "commit": "35abed5" }
       ],
       "documentation": [
         { "description": "Updated documentation for agentplexus migration", "commit": "f02d4da" },
         { "description": "Added v0.4.0 release notes", "commit": "f02d4da" }
       ],
       "dependencies": [
-        { "description": "Added `github.com/agentplexus/multi-agent-spec/sdk/go` for multi-agent specifications", "commit": "9a7c9c7" }
+        { "description": "Added `github.com/plexusone/multi-agent-spec/sdk/go` for multi-agent specifications", "commit": "9a7c9c7" }
       ]
     },
     {

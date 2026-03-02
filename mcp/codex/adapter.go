@@ -13,8 +13,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/agentplexus/assistantkit/mcp/core"
 	"github.com/pelletier/go-toml/v2"
+	"github.com/plexusone/assistantkit/mcp/core"
 )
 
 const (

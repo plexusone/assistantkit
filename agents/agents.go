@@ -9,7 +9,7 @@
 //	package main
 //
 //	import (
-//	    "github.com/agentplexus/assistantkit/agents"
+//	    "github.com/plexusone/assistantkit/agents"
 //	)
 //
 //	func main() {
@@ -31,15 +31,15 @@
 package agents
 
 import (
-	"github.com/agentplexus/assistantkit/agents/core"
+	"github.com/plexusone/assistantkit/agents/core"
 
 	// Import adapters for side-effect registration
-	_ "github.com/agentplexus/assistantkit/agents/agentkit"
-	_ "github.com/agentplexus/assistantkit/agents/awsagentcore"
-	_ "github.com/agentplexus/assistantkit/agents/claude"
-	_ "github.com/agentplexus/assistantkit/agents/codex"
-	_ "github.com/agentplexus/assistantkit/agents/gemini"
-	_ "github.com/agentplexus/assistantkit/agents/kiro"
+	_ "github.com/plexusone/assistantkit/agents/agentkit"
+	_ "github.com/plexusone/assistantkit/agents/awsagentcore"
+	_ "github.com/plexusone/assistantkit/agents/claude"
+	_ "github.com/plexusone/assistantkit/agents/codex"
+	_ "github.com/plexusone/assistantkit/agents/gemini"
+	_ "github.com/plexusone/assistantkit/agents/kiro"
 )
 
 // Re-export core types for convenience

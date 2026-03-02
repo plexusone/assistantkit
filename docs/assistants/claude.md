@@ -313,8 +313,8 @@ aiassistkit provides adapters for format conversion:
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/commands/core"
-    "github.com/agentplexus/assistantkit/commands/claude"
+    "github.com/plexusone/assistantkit/commands/core"
+    "github.com/plexusone/assistantkit/commands/claude"
 )
 
 canonical := &core.Command{

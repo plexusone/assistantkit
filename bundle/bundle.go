@@ -9,13 +9,13 @@
 //
 //	import (
 //	    "log"
-//	    "github.com/agentplexus/assistantkit/bundle"
+//	    "github.com/plexusone/assistantkit/bundle"
 //	)
 //
 //	func main() {
 //	    b := bundle.New("agentcall", "0.1.0", "Voice calling for AI assistants")
-//	    b.Plugin.Author = "agentplexus"
-//	    b.Plugin.Repository = "https://github.com/agentplexus/agentcall"
+//	    b.Plugin.Author = "plexusone"
+//	    b.Plugin.Repository = "https://github.com/plexusone/agentcall"
 //
 //	    // Add MCP server
 //	    b.AddMCPServer("agentcall", bundle.MCPServer{
@@ -41,13 +41,13 @@
 package bundle
 
 import (
-	agentscore "github.com/agentplexus/assistantkit/agents/core"
-	commandscore "github.com/agentplexus/assistantkit/commands/core"
-	contextcore "github.com/agentplexus/assistantkit/context/core"
-	hookscore "github.com/agentplexus/assistantkit/hooks/core"
-	mcpcore "github.com/agentplexus/assistantkit/mcp/core"
-	pluginscore "github.com/agentplexus/assistantkit/plugins/core"
-	skillscore "github.com/agentplexus/assistantkit/skills/core"
+	agentscore "github.com/plexusone/assistantkit/agents/core"
+	commandscore "github.com/plexusone/assistantkit/commands/core"
+	contextcore "github.com/plexusone/assistantkit/context/core"
+	hookscore "github.com/plexusone/assistantkit/hooks/core"
+	mcpcore "github.com/plexusone/assistantkit/mcp/core"
+	pluginscore "github.com/plexusone/assistantkit/plugins/core"
+	skillscore "github.com/plexusone/assistantkit/skills/core"
 )
 
 // SupportedTools lists all tools that have bundle generation support.

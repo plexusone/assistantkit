@@ -1,7 +1,7 @@
 package core
 
 import (
-	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
+	multiagentspec "github.com/plexusone/multi-agent-spec/sdk/go"
 )
 
 // SelfDirectedTeam wraps a multi-agent-spec Team with assistantkit-specific functionality.

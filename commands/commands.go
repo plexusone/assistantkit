@@ -10,7 +10,7 @@
 //	package main
 //
 //	import (
-//	    "github.com/agentplexus/assistantkit/commands"
+//	    "github.com/plexusone/assistantkit/commands"
 //	)
 //
 //	func main() {
@@ -37,12 +37,12 @@
 package commands
 
 import (
-	"github.com/agentplexus/assistantkit/commands/core"
+	"github.com/plexusone/assistantkit/commands/core"
 
 	// Import adapters for side-effect registration
-	_ "github.com/agentplexus/assistantkit/commands/claude"
-	_ "github.com/agentplexus/assistantkit/commands/codex"
-	_ "github.com/agentplexus/assistantkit/commands/gemini"
+	_ "github.com/plexusone/assistantkit/commands/claude"
+	_ "github.com/plexusone/assistantkit/commands/codex"
+	_ "github.com/plexusone/assistantkit/commands/gemini"
 )
 
 // Re-export core types for convenience

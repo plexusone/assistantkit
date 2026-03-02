@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/agentplexus/assistantkit/teams/schema/team.schema.json",
+  "$id": "https://github.com/plexusone/assistantkit/teams/schema/team.schema.json",
   "title": "Team",
   "description": "A multi-agent team orchestration definition. Teams coordinate multiple agents to accomplish complex workflows.",
   "type": "object",

@@ -20,12 +20,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/agentplexus/assistantkit/agents"
-	"github.com/agentplexus/assistantkit/commands"
-	"github.com/agentplexus/assistantkit/plugins"
-	powercore "github.com/agentplexus/assistantkit/powers/core"
-	"github.com/agentplexus/assistantkit/powers/kiro"
-	"github.com/agentplexus/assistantkit/skills"
+	"github.com/plexusone/assistantkit/agents"
+	"github.com/plexusone/assistantkit/commands"
+	"github.com/plexusone/assistantkit/plugins"
+	powercore "github.com/plexusone/assistantkit/powers/core"
+	"github.com/plexusone/assistantkit/powers/kiro"
+	"github.com/plexusone/assistantkit/skills"
 )
 
 // Result contains the results of plugin generation.

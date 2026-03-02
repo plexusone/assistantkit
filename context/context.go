@@ -9,7 +9,7 @@
 // Create a CONTEXT.json file in your project root:
 //
 //	{
-//	  "$schema": "https://github.com/agentplexus/assistantkit/context/schema/project-context.schema.json",
+//	  "$schema": "https://github.com/plexusone/assistantkit/context/schema/project-context.schema.json",
 //	  "name": "my-project",
 //	  "description": "A brief description",
 //	  "language": "go",
@@ -22,8 +22,8 @@
 // Then convert to tool-specific formats:
 //
 //	import (
-//	    "github.com/agentplexus/assistantkit/context"
-//	    _ "github.com/agentplexus/assistantkit/context/claude" // Register converter
+//	    "github.com/plexusone/assistantkit/context"
+//	    _ "github.com/plexusone/assistantkit/context/claude" // Register converter
 //	)
 //
 //	ctx, _ := context.ReadFile("CONTEXT.json")
@@ -37,7 +37,7 @@
 package context
 
 import (
-	"github.com/agentplexus/assistantkit/context/core"
+	"github.com/plexusone/assistantkit/context/core"
 )
 
 // Re-export core types for convenience.

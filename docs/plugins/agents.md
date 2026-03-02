@@ -23,7 +23,7 @@ type Agent struct {
 package main
 
 import (
-    "github.com/agentplexus/assistantkit/agents/core"
+    "github.com/plexusone/assistantkit/agents/core"
 )
 
 func main() {

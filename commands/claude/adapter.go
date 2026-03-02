@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/agentplexus/assistantkit/commands/core"
+	"github.com/plexusone/assistantkit/commands/core"
 )
 
 func init() {

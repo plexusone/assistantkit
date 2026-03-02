@@ -1,7 +1,7 @@
 package gemini
 
 import (
-	"github.com/agentplexus/assistantkit/plugins/core"
+	"github.com/plexusone/assistantkit/plugins/core"
 )
 
 // GeminiExtension represents the Gemini CLI gemini-extension.json format.

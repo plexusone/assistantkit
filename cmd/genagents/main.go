@@ -20,17 +20,17 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/agentplexus/assistantkit/agents"
-	"github.com/agentplexus/assistantkit/agents/agentkit"
-	"github.com/agentplexus/assistantkit/agents/awsagentcore"
-	"github.com/agentplexus/assistantkit/agents/core"
-	"github.com/agentplexus/assistantkit/skills"
-	skillscore "github.com/agentplexus/assistantkit/skills/core"
+	"github.com/plexusone/assistantkit/agents"
+	"github.com/plexusone/assistantkit/agents/agentkit"
+	"github.com/plexusone/assistantkit/agents/awsagentcore"
+	"github.com/plexusone/assistantkit/agents/core"
+	"github.com/plexusone/assistantkit/skills"
+	skillscore "github.com/plexusone/assistantkit/skills/core"
 
 	// Import adapters to register them
-	_ "github.com/agentplexus/assistantkit/agents/claude"
-	_ "github.com/agentplexus/assistantkit/agents/kiro"
-	_ "github.com/agentplexus/assistantkit/skills/kiro"
+	_ "github.com/plexusone/assistantkit/agents/claude"
+	_ "github.com/plexusone/assistantkit/agents/kiro"
+	_ "github.com/plexusone/assistantkit/skills/kiro"
 )
 
 func main() {

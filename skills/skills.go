@@ -9,7 +9,7 @@
 //	package main
 //
 //	import (
-//	    "github.com/agentplexus/assistantkit/skills"
+//	    "github.com/plexusone/assistantkit/skills"
 //	)
 //
 //	func main() {
@@ -31,12 +31,12 @@
 package skills
 
 import (
-	"github.com/agentplexus/assistantkit/skills/core"
+	"github.com/plexusone/assistantkit/skills/core"
 
 	// Import adapters for side-effect registration
-	_ "github.com/agentplexus/assistantkit/skills/claude"
-	_ "github.com/agentplexus/assistantkit/skills/codex"
-	_ "github.com/agentplexus/assistantkit/skills/kiro"
+	_ "github.com/plexusone/assistantkit/skills/claude"
+	_ "github.com/plexusone/assistantkit/skills/codex"
+	_ "github.com/plexusone/assistantkit/skills/kiro"
 )
 
 // Re-export core types for convenience

@@ -103,7 +103,7 @@ func TestAddMCPServer(t *testing.T) {
 
 func TestGenerateClaude(t *testing.T) {
 	b := New("agentcall", "0.1.0", "Voice calling for AI assistants")
-	b.Plugin.Author = "agentplexus"
+	b.Plugin.Author = "plexusone"
 
 	// Add MCP server
 	//nolint:gosec // G101: Environment variable template, not a hardcoded credential

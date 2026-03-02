@@ -45,7 +45,7 @@ AssistantKit is a Go library for managing configuration files across multiple AI
 ## Installation
 
 ```bash
-go get github.com/agentplexus/assistantkit
+go get github.com/plexusone/assistantkit
 ```
 
 ### CLI Tool
@@ -53,7 +53,7 @@ go get github.com/agentplexus/assistantkit
 To use the CLI tool for generating plugins:
 
 ```bash
-go install github.com/agentplexus/assistantkit/cmd/assistantkit@latest
+go install github.com/plexusone/assistantkit/cmd/assistantkit@latest
 ```
 
 ## CLI
@@ -185,8 +185,8 @@ package main
 import (
     "log"
 
-    "github.com/agentplexus/assistantkit/mcp/claude"
-    "github.com/agentplexus/assistantkit/mcp/vscode"
+    "github.com/plexusone/assistantkit/mcp/claude"
+    "github.com/plexusone/assistantkit/mcp/vscode"
 )
 
 func main() {
@@ -209,9 +209,9 @@ func main() {
 package main
 
 import (
-    "github.com/agentplexus/assistantkit/mcp"
-    "github.com/agentplexus/assistantkit/mcp/claude"
-    "github.com/agentplexus/assistantkit/mcp/core"
+    "github.com/plexusone/assistantkit/mcp"
+    "github.com/plexusone/assistantkit/mcp/claude"
+    "github.com/plexusone/assistantkit/mcp/core"
 )
 
 func main() {
@@ -250,7 +250,7 @@ import (
     "log"
     "os"
 
-    "github.com/agentplexus/assistantkit/mcp"
+    "github.com/plexusone/assistantkit/mcp"
 )
 
 func main() {
@@ -275,7 +275,7 @@ package main
 import (
     "log"
 
-    "github.com/agentplexus/assistantkit/mcp"
+    "github.com/plexusone/assistantkit/mcp"
 )
 
 func main() {
@@ -404,8 +404,8 @@ The `hooks` subpackage provides adapters for automation/lifecycle hooks that exe
 package main
 
 import (
-    "github.com/agentplexus/assistantkit/hooks"
-    "github.com/agentplexus/assistantkit/hooks/claude"
+    "github.com/plexusone/assistantkit/hooks"
+    "github.com/plexusone/assistantkit/hooks/claude"
 )
 
 func main() {
@@ -433,7 +433,7 @@ import (
     "log"
     "os"
 
-    "github.com/agentplexus/assistantkit/hooks"
+    "github.com/plexusone/assistantkit/hooks"
 )
 
 func main() {
@@ -496,8 +496,8 @@ Self-directed workflows allow agents to autonomously coordinate work using role,
 
 ```go
 import (
-    "github.com/agentplexus/assistantkit/teams"
-    "github.com/agentplexus/assistantkit/teams/core"
+    "github.com/plexusone/assistantkit/teams"
+    "github.com/plexusone/assistantkit/teams/core"
 )
 
 // Create from multi-agent-spec definitions
@@ -518,7 +518,7 @@ specialists := team.Specialists()
 Generate Claude Code agent files with role-based prompts:
 
 ```go
-import "github.com/agentplexus/assistantkit/teams/claude"
+import "github.com/plexusone/assistantkit/teams/claude"
 
 adapter := claude.NewAdapter()
 files, err := adapter.Convert(selfDirectedTeam)
@@ -531,7 +531,7 @@ files, err := adapter.Convert(selfDirectedTeam)
 Generate platform-specific team files:
 
 ```go
-import "github.com/agentplexus/assistantkit/generate"
+import "github.com/plexusone/assistantkit/generate"
 
 result, err := generate.Teams(generate.TeamsOptions{
     SpecsDir: "specs",
@@ -625,15 +625,15 @@ AssistantKit is part of the AgentPlexus family of Go modules for building AI age
 
 MIT License - see [LICENSE](LICENSE) for details.
 
- [build-status-svg]: https://github.com/agentplexus/assistantkit/actions/workflows/ci.yaml/badge.svg?branch=main
- [build-status-url]: https://github.com/agentplexus/assistantkit/actions/workflows/ci.yaml
- [lint-status-svg]: https://github.com/agentplexus/assistantkit/actions/workflows/lint.yaml/badge.svg?branch=main
- [lint-status-url]: https://github.com/agentplexus/assistantkit/actions/workflows/lint.yaml
- [goreport-svg]: https://goreportcard.com/badge/github.com/agentplexus/assistantkit
- [goreport-url]: https://goreportcard.com/report/github.com/agentplexus/assistantkit
- [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/agentplexus/assistantkit
- [docs-godoc-url]: https://pkg.go.dev/github.com/agentplexus/assistantkit
+ [build-status-svg]: https://github.com/plexusone/assistantkit/actions/workflows/ci.yaml/badge.svg?branch=main
+ [build-status-url]: https://github.com/plexusone/assistantkit/actions/workflows/ci.yaml
+ [lint-status-svg]: https://github.com/plexusone/assistantkit/actions/workflows/lint.yaml/badge.svg?branch=main
+ [lint-status-url]: https://github.com/plexusone/assistantkit/actions/workflows/lint.yaml
+ [goreport-svg]: https://goreportcard.com/badge/github.com/plexusone/assistantkit
+ [goreport-url]: https://goreportcard.com/report/github.com/plexusone/assistantkit
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/plexusone/assistantkit
+ [docs-godoc-url]: https://pkg.go.dev/github.com/plexusone/assistantkit
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/agentplexus/assistantkit/blob/master/LICENSE
- [used-by-svg]: https://sourcegraph.com/github.com/agentplexus/assistantkit/-/badge.svg
- [used-by-url]: https://sourcegraph.com/github.com/agentplexus/assistantkit?badge
+ [license-url]: https://github.com/plexusone/assistantkit/blob/master/LICENSE
+ [used-by-svg]: https://sourcegraph.com/github.com/plexusone/assistantkit/-/badge.svg
+ [used-by-url]: https://sourcegraph.com/github.com/plexusone/assistantkit?badge

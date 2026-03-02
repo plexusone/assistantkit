@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/agentplexus/assistantkit/context"
-	_ "github.com/agentplexus/assistantkit/context/claude"
+	"github.com/plexusone/assistantkit/context"
+	_ "github.com/plexusone/assistantkit/context/claude"
 )
 
 func main() {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/agentplexus/assistantkit/agents/schema/agent.schema.json",
+  "$id": "https://github.com/plexusone/assistantkit/agents/schema/agent.schema.json",
   "title": "Agent",
   "description": "A canonical agent definition for AI assistants. Maps to Claude Code, Gemini CLI, Codex CLI, and Kiro CLI.",
   "type": "object",

@@ -6,12 +6,12 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/agentplexus/assistantkit/agents"
-	"github.com/agentplexus/assistantkit/teams"
-	"github.com/agentplexus/assistantkit/teams/claude"
-	"github.com/agentplexus/assistantkit/teams/core"
+	"github.com/plexusone/assistantkit/agents"
+	"github.com/plexusone/assistantkit/teams"
+	"github.com/plexusone/assistantkit/teams/claude"
+	"github.com/plexusone/assistantkit/teams/core"
 
-	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
+	multiagentspec "github.com/plexusone/multi-agent-spec/sdk/go"
 )
 
 // TeamResult contains the results of team generation.

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/agentplexus/assistantkit/commands/schema/command.schema.json",
+  "$id": "https://github.com/plexusone/assistantkit/commands/schema/command.schema.json",
   "title": "AI Assist Kit Command",
   "description": "Canonical command/prompt definition for AI coding assistants",
   "type": "object",

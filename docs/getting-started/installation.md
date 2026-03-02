@@ -12,7 +12,7 @@
 ## Install the Library
 
 ```bash
-go get github.com/agentplexus/assistantkit
+go get github.com/plexusone/assistantkit
 ```
 
 ## Install the CLI Tool (Optional)
@@ -20,7 +20,7 @@ go get github.com/agentplexus/assistantkit
 To use the CLI tool for generating plugins from canonical specs:
 
 ```bash
-go install github.com/agentplexus/assistantkit/cmd/assistantkit@latest
+go install github.com/plexusone/assistantkit/cmd/assistantkit@latest
 ```
 
 See [Generate Plugins](../cli/generate-plugins.md) for CLI usage.
@@ -32,7 +32,7 @@ package main
 
 import (
     "fmt"
-    "github.com/agentplexus/assistantkit/plugins/core"
+    "github.com/plexusone/assistantkit/plugins/core"
 )
 
 func main() {

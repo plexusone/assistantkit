@@ -18,7 +18,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/agentplexus/assistantkit/mcp/core"
+	"github.com/plexusone/assistantkit/mcp/core"
 )
 
 const (

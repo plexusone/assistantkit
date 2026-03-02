@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 
-	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
+	multiagentspec "github.com/plexusone/multi-agent-spec/sdk/go"
 )
 
 // DefaultFileMode is the default permission for generated files.

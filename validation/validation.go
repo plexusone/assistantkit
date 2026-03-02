@@ -12,8 +12,8 @@
 // Example usage:
 //
 //	import (
-//	    "github.com/agentplexus/assistantkit/validation"
-//	    _ "github.com/agentplexus/assistantkit/validation/claude" // Register Claude adapter
+//	    "github.com/plexusone/assistantkit/validation"
+//	    _ "github.com/plexusone/assistantkit/validation/claude" // Register Claude adapter
 //	)
 //
 //	// Read canonical validation area
@@ -28,7 +28,7 @@
 package validation
 
 import (
-	"github.com/agentplexus/assistantkit/validation/core"
+	"github.com/plexusone/assistantkit/validation/core"
 )
 
 // ValidationArea is the canonical validation area type.

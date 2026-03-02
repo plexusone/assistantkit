@@ -32,17 +32,17 @@
 package mcp
 
 import (
-	"github.com/agentplexus/assistantkit/mcp/core"
+	"github.com/plexusone/assistantkit/mcp/core"
 
 	// Import adapters to register them
-	_ "github.com/agentplexus/assistantkit/mcp/claude"
-	_ "github.com/agentplexus/assistantkit/mcp/cline"
-	_ "github.com/agentplexus/assistantkit/mcp/codex"
-	_ "github.com/agentplexus/assistantkit/mcp/cursor"
-	_ "github.com/agentplexus/assistantkit/mcp/kiro"
-	_ "github.com/agentplexus/assistantkit/mcp/roo"
-	_ "github.com/agentplexus/assistantkit/mcp/vscode"
-	_ "github.com/agentplexus/assistantkit/mcp/windsurf"
+	_ "github.com/plexusone/assistantkit/mcp/claude"
+	_ "github.com/plexusone/assistantkit/mcp/cline"
+	_ "github.com/plexusone/assistantkit/mcp/codex"
+	_ "github.com/plexusone/assistantkit/mcp/cursor"
+	_ "github.com/plexusone/assistantkit/mcp/kiro"
+	_ "github.com/plexusone/assistantkit/mcp/roo"
+	_ "github.com/plexusone/assistantkit/mcp/vscode"
+	_ "github.com/plexusone/assistantkit/mcp/windsurf"
 )
 
 // Re-export core types for convenience

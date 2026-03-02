@@ -4,9 +4,9 @@ import (
 	"strings"
 	"testing"
 
-	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
+	multiagentspec "github.com/plexusone/multi-agent-spec/sdk/go"
 
-	"github.com/agentplexus/assistantkit/teams/core"
+	"github.com/plexusone/assistantkit/teams/core"
 )
 
 func TestAdapter_Name(t *testing.T) {
