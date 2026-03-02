@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/google/go-github/v82 v82.0.0
-	github.com/grokify/gogithub v0.9.1
+	github.com/grokify/gogithub v0.10.0
 	github.com/pelletier/go-toml/v2 v2.2.4
 	github.com/plexusone/multi-agent-spec/sdk/go v0.8.0
 	github.com/spf13/cobra v1.10.2
@@ -14,6 +14,7 @@ require (
 require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
+	github.com/google/go-github/v84 v84.0.0 // indirect
 	github.com/google/go-querystring v1.2.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/invopop/jsonschema v0.13.0 // indirect
