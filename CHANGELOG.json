@@ -17,7 +17,8 @@
         { "description": "Module path renamed from `github.com/agentplexus/assistantkit` to `github.com/plexusone/assistantkit`", "commit": "232a4c2" },
         { "description": "Updated `multi-agent-spec/sdk/go` dependency to v0.8.0 from plexusone org", "commit": "232a4c2" },
         { "description": "Updated all internal imports to use new module path", "commit": "232a4c2" },
-        { "description": "Updated documentation site URL to `plexusone.github.io`", "commit": "232a4c2" }
+        { "description": "Updated documentation site URL to `plexusone.github.io`", "commit": "232a4c2" },
+        { "description": "Upgraded `go-github` from v82 to v84 for compatibility with `gogithub` v0.10.0", "commit": "53d78cc" }
       ],
       "documentation": [
         { "description": "Updated all documentation references to plexusone organization", "commit": "232a4c2" },
