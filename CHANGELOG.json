@@ -7,6 +7,24 @@
   "maintainers": ["plexusone"],
   "releases": [
     {
+      "version": "v0.11.0",
+      "date": "2026-03-02",
+      "highlights": [
+        { "description": "**BREAKING:** Module path migrated from `github.com/agentplexus/assistantkit` to `github.com/plexusone/assistantkit`" },
+        { "description": "Organization migration to plexusone GitHub organization" }
+      ],
+      "changed": [
+        { "description": "Module path renamed from `github.com/agentplexus/assistantkit` to `github.com/plexusone/assistantkit`", "commit": "232a4c2" },
+        { "description": "Updated `multi-agent-spec/sdk/go` dependency to v0.8.0 from plexusone org", "commit": "232a4c2" },
+        { "description": "Updated all internal imports to use new module path", "commit": "232a4c2" },
+        { "description": "Updated documentation site URL to `plexusone.github.io`", "commit": "232a4c2" }
+      ],
+      "documentation": [
+        { "description": "Updated all documentation references to plexusone organization", "commit": "232a4c2" },
+        { "description": "Updated installation instructions with new module path", "commit": "232a4c2" }
+      ]
+    },
+    {
       "version": "v0.10.0",
       "date": "2026-02-21",
       "highlights": [
