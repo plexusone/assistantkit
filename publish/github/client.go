@@ -5,7 +5,7 @@ package github
 import (
 	"context"
 
-	"github.com/google/go-github/v82/github"
+	"github.com/google/go-github/v84/github"
 	"github.com/grokify/gogithub/auth"
 	"github.com/grokify/gogithub/pr"
 	"github.com/grokify/gogithub/repo"
