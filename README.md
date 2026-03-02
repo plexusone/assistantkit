@@ -1,9 +1,11 @@
 # AssistantKit
 
-[![Build Status][build-status-svg]][build-status-url]
-[![Lint Status][lint-status-svg]][lint-status-url]
+[![Go CI][go-ci-svg]][go-ci-url]
+[![Go Lint][go-lint-svg]][go-lint-url]
+[![Go SAST][go-sast-svg]][go-sast-url]
 [![Go Report Card][goreport-svg]][goreport-url]
 [![Docs][docs-godoc-svg]][docs-godoc-url]
+[![Visualization][viz-svg]][viz-url]
 [![License][license-svg]][license-url]
 
 AssistantKit is a Go library for managing configuration files across multiple AI coding assistants. It provides a unified interface for reading, writing, and converting between different tool-specific formats.
@@ -625,15 +627,19 @@ AssistantKit is part of the AgentPlexus family of Go modules for building AI age
 
 MIT License - see [LICENSE](LICENSE) for details.
 
- [build-status-svg]: https://github.com/plexusone/assistantkit/actions/workflows/ci.yaml/badge.svg?branch=main
- [build-status-url]: https://github.com/plexusone/assistantkit/actions/workflows/ci.yaml
- [lint-status-svg]: https://github.com/plexusone/assistantkit/actions/workflows/lint.yaml/badge.svg?branch=main
- [lint-status-url]: https://github.com/plexusone/assistantkit/actions/workflows/lint.yaml
+ [go-ci-svg]: https://github.com/plexusone/assistantkit/actions/workflows/go-ci.yaml/badge.svg?branch=main
+ [go-ci-url]: https://github.com/plexusone/assistantkit/actions/workflows/go-ci.yaml
+ [go-lint-svg]: https://github.com/plexusone/assistantkit/actions/workflows/go-lint.yaml/badge.svg?branch=main
+ [go-lint-url]: https://github.com/plexusone/assistantkit/actions/workflows/go-lint.yaml
+ [go-sast-svg]: https://github.com/plexusone/assistantkit/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
+ [go-sast-url]: https://github.com/plexusone/assistantkit/actions/workflows/go-sast-codeql.yaml
  [goreport-svg]: https://goreportcard.com/badge/github.com/plexusone/assistantkit
  [goreport-url]: https://goreportcard.com/report/github.com/plexusone/assistantkit
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/plexusone/assistantkit
  [docs-godoc-url]: https://pkg.go.dev/github.com/plexusone/assistantkit
+ [viz-svg]: https://img.shields.io/badge/visualizaton-Go-blue.svg
+ [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=plexusone%2Fassistantkit
+ [loc-svg]: https://tokei.rs/b1/github/plexusone/assistantkit
+ [repo-url]: https://github.com/plexusone/assistantkit
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
  [license-url]: https://github.com/plexusone/assistantkit/blob/master/LICENSE
- [used-by-svg]: https://sourcegraph.com/github.com/plexusone/assistantkit/-/badge.svg
- [used-by-url]: https://sourcegraph.com/github.com/plexusone/assistantkit?badge
