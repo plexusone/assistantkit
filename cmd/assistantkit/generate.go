@@ -37,6 +37,15 @@ Each deployment target receives a complete plugin:
   - kiro/kiro-cli: POWER.md + mcp.json or agents/*.json
   - gemini/gemini-cli: gemini-extension.json, commands/, agents/
 
+Deployment output paths:
+  The output path in your deployment target should be the plugin ROOT directory.
+  The generator creates subdirectories (agents/, steering/, etc.) automatically.
+
+  For distribution:  "output": "plugins/kiro"    -> plugins/kiro/agents/*.json
+  For local install: "output": "~/.kiro"         -> ~/.kiro/agents/*.json
+
+  Do NOT include subdirectories in output paths (e.g., "plugins/kiro/agents").
+
 Example:
   assistantkit generate
   assistantkit generate --specs=specs --target=local --output=.`,
@@ -237,6 +246,9 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 		dir := result.GeneratedDirs[target]
 		fmt.Printf("  - %s: %s\n", target, dir)
 	}
+
+	// Print install instructions for generated platforms
+	printInstallInstructions(result.GeneratedDirs)
 
 	fmt.Println("\nDone!")
 	return nil
@@ -442,4 +454,52 @@ func runGenerateAll(cmd *cobra.Command, args []string) error {
 
 	fmt.Println("\nDone!")
 	return nil
+}
+
+// printInstallInstructions prints platform-specific install commands based on generated directories.
+func printInstallInstructions(generatedDirs map[string]string) {
+	var kiroDir, claudeDir string
+
+	for target, dir := range generatedDirs {
+		targetLower := strings.ToLower(target)
+		if strings.Contains(targetLower, "kiro") {
+			kiroDir = dir
+		} else if strings.Contains(targetLower, "claude") {
+			claudeDir = dir
+		}
+	}
+
+	if kiroDir == "" && claudeDir == "" {
+		return
+	}
+
+	fmt.Println("\nTo install:")
+
+	if kiroDir != "" {
+		// Check if already installed to ~/.kiro
+		if !strings.Contains(kiroDir, ".kiro") {
+			fmt.Println("\n  Kiro CLI:")
+			fmt.Printf("    cp %s/agents/*.json ~/.kiro/agents/\n", kiroDir)
+			// Check if steering directory exists in the output
+			steeringDir := filepath.Join(kiroDir, "steering")
+			if _, err := os.Stat(steeringDir); err == nil {
+				fmt.Printf("    cp %s/steering/*.md ~/.kiro/steering/\n", kiroDir)
+			}
+		} else {
+			fmt.Println("\n  Kiro CLI: ✓ Already installed to ~/.kiro")
+		}
+	}
+
+	if claudeDir != "" {
+		// Check if already installed to ~/.claude or .claude
+		if !strings.Contains(claudeDir, ".claude") {
+			fmt.Println("\n  Claude Code:")
+			fmt.Printf("    cp -r %s/.claude-plugin ~/.claude-plugin\n", claudeDir)
+			fmt.Printf("    cp %s/agents/*.md .claude/agents/\n", claudeDir)
+		} else {
+			fmt.Println("\n  Claude Code: ✓ Already installed")
+		}
+	}
+
+	fmt.Println("\n  Tip: Set output to ~/.kiro or .claude in your deployment file to install directly.")
 }
