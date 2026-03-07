@@ -7,6 +7,29 @@
   "maintainers": ["plexusone"],
   "releases": [
     {
+      "version": "v0.12.0",
+      "date": "2026-03-07",
+      "highlights": [
+        { "description": "Post-generation install instructions for Kiro CLI and Claude Code" },
+        { "description": "Output path validation to prevent duplicate subdirectory nesting" }
+      ],
+      "added": [
+        { "description": "`printInstallInstructions()` prints platform-specific install commands after generation", "commit": "6b35246" },
+        { "description": "Help text documents deployment output path requirements (plugin root vs subdirectory)", "commit": "6b35246" }
+      ],
+      "fixed": [
+        { "description": "Reject output paths ending in `agents`, `steering`, `skills`, `commands` with actionable error", "commit": "5cef768" }
+      ],
+      "tests": [
+        { "description": "Added `TestGeneratePlatformPlugin_RejectsSubdirectoryPaths` for output path validation", "commit": "78d4fb3" }
+      ],
+      "documentation": [
+        { "description": "New Installation section in Kiro CLI docs with copy vs direct install workflows", "commit": "1dee8a5" },
+        { "description": "Project vs User-Level Agents comparison table explaining Kiro's design constraints", "commit": "1dee8a5" },
+        { "description": "Steering files workaround for project-level context in Kiro CLI", "commit": "1dee8a5" }
+      ]
+    },
+    {
       "version": "v0.11.0",
       "date": "2026-03-02",
       "highlights": [
