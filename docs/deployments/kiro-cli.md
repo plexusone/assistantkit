@@ -8,6 +8,109 @@ Kiro CLI uses a flat agent directory structure where all agents live in `~/.kiro
 
 AssistantKit addresses this with **single-source prefix configuration**: define the prefix once in your deployment config, and it's applied to all generated agent names, filenames, and documentation.
 
+## Project vs User-Level Agents
+
+Kiro CLI and Claude Code handle agent storage differently:
+
+| Aspect | Claude Code | Kiro CLI |
+|--------|-------------|----------|
+| **Project agents** | `.claude/agents/*.md` ✅ | Not supported ❌ |
+| **User agents** | `~/.claude/agents/*.md` | `~/.kiro/agents/*.json` |
+| **Project context** | `CLAUDE.md` | `.kiro/steering/*.md` |
+| **Auto-discovery** | Yes (scans project) | No (user dir only) |
+| **Namespacing** | Directory-based | Prefix-based |
+
+### Why Kiro Works This Way
+
+Kiro CLI reads agents **only** from the user-level `~/.kiro/agents/` directory. It does not scan project directories for agent definitions. This design means:
+
+1. **All agents share one namespace** — Without prefixes, an agent named `coordinator` in Project A would conflict with `coordinator` in Project B
+2. **Installation is always required** — You can't just define agents in your project and use them; they must be copied to `~/.kiro/`
+3. **Prefixes prevent conflicts** — Using `rel_coordinator` vs `rev_coordinator` lets multiple teams coexist
+
+### Project-Level Context (Steering Files)
+
+While agent *definitions* must live in `~/.kiro/agents/`, you can still use **project-level context** via steering files:
+
+```
+my-project/
+└── .kiro/
+    └── steering/
+        ├── project-guidelines.md
+        └── coding-standards.md
+```
+
+Reference them in your agent's `resources` field:
+
+```json
+{
+  "name": "rel_coordinator",
+  "resources": [
+    "file://.kiro/steering/**/*.md",
+    "file://README.md"
+  ]
+}
+```
+
+This gives agents project-specific context while the agent definitions remain in the global directory.
+
+!!! note "Claude Code Alternative"
+    If you prefer project-scoped agents without installation, consider using Claude Code instead. Claude Code automatically discovers agents in `.claude/agents/` within your project, with no copy step required.
+
+## Installation
+
+Kiro CLI reads agents from `~/.kiro/agents/` and steering files from `~/.kiro/steering/`. Generated files must be installed to these directories before Kiro can use them.
+
+### Option A: Generate then Copy (Recommended for Distribution)
+
+Generate to a project directory, then copy to Kiro's config:
+
+```bash
+# Generate to plugins/kiro/
+assistantkit generate --specs=specs --target=local
+
+# Install to Kiro
+cp plugins/kiro/agents/*.json ~/.kiro/agents/
+cp plugins/kiro/steering/*.md ~/.kiro/steering/
+```
+
+This approach is best when:
+
+- You want to review generated files before installing
+- You're distributing agents to others (commit `plugins/kiro/` to git)
+- You have multiple projects and want to manage installations manually
+
+### Option B: Direct Install (Recommended for Personal Use)
+
+Set `output` to `~/.kiro` in your deployment config to install directly:
+
+```json
+{
+  "team": "release-team",
+  "targets": [
+    {
+      "name": "local-kiro",
+      "platform": "kiro-cli",
+      "output": "~/.kiro",
+      "kiroCli": {
+        "prefix": "rel_"
+      }
+    }
+  ]
+}
+```
+
+Then generate:
+
+```bash
+assistantkit generate --specs=specs --target=local
+```
+
+Files are written directly to `~/.kiro/agents/` and `~/.kiro/steering/`. No copy step needed.
+
+!!! tip "Output Path Must Be Plugin Root"
+    Set `output` to `~/.kiro` (the plugin root), NOT `~/.kiro/agents`. The generator creates the `agents/` and `steering/` subdirectories automatically.
+
 ## Generated Output
 
 For a Kiro CLI target, AssistantKit generates:
@@ -228,15 +331,21 @@ assistantkit generate --specs=specs --target=local
 
 ### 7. Install Agents
 
-Copy generated agents to Kiro's agent directory:
+Install generated files to Kiro's config directory:
 
 ```bash
+# Create directories if needed
+mkdir -p ~/.kiro/agents ~/.kiro/steering
+
 # Copy agents
 cp plugins/kiro/agents/*.json ~/.kiro/agents/
 
-# Copy steering files
+# Copy steering files (if any)
 cp plugins/kiro/steering/*.md ~/.kiro/steering/
 ```
+
+!!! tip "Direct Installation"
+    To skip the copy step, set `"output": "~/.kiro"` in your deployment config. See [Installation](#installation) for details.
 
 ### 8. Use Agents
 
