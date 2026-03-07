@@ -1062,6 +1062,15 @@ func generatePlatformPlugin(
 	skls []*skills.Skill,
 	agts []*agents.Agent,
 ) error {
+	// Validate output path doesn't end with a generated subdirectory name.
+	// The generator creates these subdirectories automatically, so specifying them
+	// in the output path would result in duplicate nesting (e.g., agents/agents/).
+	base := filepath.Base(outputDir)
+	switch base {
+	case "agents", "steering", "skills", "commands":
+		return fmt.Errorf("output path %q should be the plugin root directory, not a subdirectory (use %q instead)", outputDir, filepath.Dir(outputDir))
+	}
+
 	// Create output directory
 	if err := os.MkdirAll(outputDir, 0755); err != nil {
 		return fmt.Errorf("creating output dir: %w", err)
